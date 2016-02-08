@@ -25,6 +25,19 @@ class PluginHelper {
         return nil
     }
     
+    static func readFile(path: String) -> String? {
+        let workspacePath = PluginHelper.workspacePath()
+        if (workspacePath != nil) {
+            do {
+                let content = try NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding)
+                return content as String
+            } catch {
+                return nil
+            }
+        }
+        return nil
+    }
+    
     static func runShellCommand(command: String) -> String? {
         let pipe = NSPipe()
         let task = NSTask()
