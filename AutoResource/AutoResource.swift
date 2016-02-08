@@ -28,22 +28,24 @@ class AutoResource: NSObject {
     func removeObserver() {
         center.removeObserver(self)
     }
-
+    
     func createMenuItems() {
         removeObserver()
 
-        var item = NSApp.mainMenu!.itemWithTitle("Edit")
+        let item = NSApp.mainMenu!.itemWithTitle("Edit")
         if item != nil {
-            var actionMenuItem = NSMenuItem(title:"Do Action", action:"doMenuAction", keyEquivalent:"")
-            actionMenuItem.target = self
+            let syncMenuItem = NSMenuItem(title: "Sync Resources", action: "syncAction", keyEquivalent: "")
+            syncMenuItem.target = self
             item!.submenu!.addItem(NSMenuItem.separatorItem())
-            item!.submenu!.addItem(actionMenuItem)
+            item!.submenu!.addItem(syncMenuItem)
         }
     }
 
-    func doMenuAction() {
-        let error = NSError(domain: "Hello World!", code:42, userInfo:nil)
-        NSAlert(error: error).runModal()
+    func syncAction() {
+        let alert = NSAlert()
+        alert.messageText = PluginHelper.workspacePath() ?? "N/A"
+        alert.runModal()
     }
+    
 }
 
