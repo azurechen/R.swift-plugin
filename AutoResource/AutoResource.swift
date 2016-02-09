@@ -42,33 +42,21 @@ class AutoResource: NSObject {
     }
 
     func syncAction() {
-        // 1. check and create gen group
-        createGenGroupIfNeeded()
+        // 1. check R file
+        createResourceFileIfNeeded()
         // 2. rewrite R file
     }
     
-    func createGenGroupIfNeeded() {
+    func createResourceFileIfNeeded() {
         let projectPath = PluginHelper.workspacePath()
         if (projectPath != nil) {
             let projectName = projectPath!.componentsSeparatedByString("/").last
             
-            let genPath = "\(projectPath!)/\(projectName!)/gen"
-            // if gen folder doesn't exist
-            if (!NSFileManager.defaultManager().fileExistsAtPath(genPath)) {
-                do {
-                    // create gen folder
-                    try NSFileManager.defaultManager().createDirectoryAtPath(genPath, withIntermediateDirectories: false, attributes: nil)
-                } catch let error as NSError {
-                    print(error.localizedDescription)
-                }
+            let rPath = "\(projectPath!)/\(projectName!)/R.swift"
+            // if R file doesn't exist
+            if (!NSFileManager.defaultManager().fileExistsAtPath(rPath)) {
+                NSFileManager.defaultManager().createFileAtPath(rPath, contents: nil, attributes: nil)
             }
-            
-            // register the gen group in project.pbxproj
-            //let fileContent = PluginHelper.readFile("\(projectPath!)/\(projectName!).xcodeproj/project.pbxproj")
-//
-//            let alert = NSAlert()
-//            alert.messageText = fileContent ?? ""
-//            alert.runModal()
         }
         
     }
