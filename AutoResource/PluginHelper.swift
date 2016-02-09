@@ -25,19 +25,6 @@ class PluginHelper {
         return nil
     }
     
-    static func readFile(path: String) -> String? {
-        let workspacePath = PluginHelper.workspacePath()
-        if (workspacePath != nil) {
-            do {
-                let content = try NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding)
-                return content as String
-            } catch {
-                return nil
-            }
-        }
-        return nil
-    }
-    
     static func runShellCommand(command: String) -> String? {
         let pipe = NSPipe()
         let task = NSTask()
@@ -52,6 +39,16 @@ class PluginHelper {
             return result as String
         }
         return nil
+    }
+    
+    static func UUID(withLength len: Int) -> String {
+        var uuid = ""
+        for (var i = 0; i < len; i++){
+            let rand = arc4random_uniform(16)
+            uuid += String(format:"%X", Int(rand))
+        }
+        
+        return uuid
     }
     
 }

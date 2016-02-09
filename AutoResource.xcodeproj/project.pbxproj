@@ -11,6 +11,7 @@
 		53282FB11C67C5F100081171 /* AutoResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53282FB01C67C5F100081171 /* AutoResource.swift */; };
 		53282FB31C67C5F100081171 /* NSObject_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53282FB21C67C5F100081171 /* NSObject_Extension.swift */; };
 		535393C71C6B8770003585F1 /* PluginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535393C61C6B8770003585F1 /* PluginHelper.swift */; };
+		535393C91C6B87EC003585F1 /* String_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535393C81C6B87EC003585F1 /* String_Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		53282FB21C67C5F100081171 /* NSObject_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSObject_Extension.swift; sourceTree = "<group>"; };
 		53282FB41C67C5F100081171 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		535393C61C6B8770003585F1 /* PluginHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluginHelper.swift; sourceTree = "<group>"; };
+		535393C81C6B87EC003585F1 /* String_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String_Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -43,6 +45,7 @@
 			isa = PBXGroup;
 			children = (
 				53282FB21C67C5F100081171 /* NSObject_Extension.swift */,
+				535393C81C6B87EC003585F1 /* String_Extension.swift */,
 				53282FB01C67C5F100081171 /* AutoResource.swift */,
 				535393C61C6B8770003585F1 /* PluginHelper.swift */,
 				53282FB41C67C5F100081171 /* Info.plist */,
@@ -126,6 +129,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				535393C91C6B87EC003585F1 /* String_Extension.swift in Sources */,
 				53282FB11C67C5F100081171 /* AutoResource.swift in Sources */,
 				53282FB31C67C5F100081171 /* NSObject_Extension.swift in Sources */,
 				535393C71C6B8770003585F1 /* PluginHelper.swift in Sources */,
