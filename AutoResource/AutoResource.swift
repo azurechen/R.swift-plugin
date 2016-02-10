@@ -14,7 +14,7 @@ class AutoResource: NSObject {
     var bundle: NSBundle
     lazy var center = NSNotificationCenter.defaultCenter()
     
-    static let REGISTERED_RESOURCE_FILE_PATTERNS = [
+    let REGISTERED_RESOURCE_FILE_PATTERNS = [
         // 1. PBXBuildFile section
         "\\n*?\\t*?.{24}? /\\* R.swift in Sources \\*/ = \\{isa = PBXBuildFile; fileRef = .*? /\\* R.swift \\*/; \\};",
         // 2. PBXFileReference section
@@ -96,6 +96,14 @@ class AutoResource: NSObject {
         let projectName = projectPath.componentsSeparatedByString("/").last
         let projectFile = "\(projectPath)/\(projectName!).xcodeproj/project.pbxproj"
         
+        // check status first
+        let status = checkResourceFile(atPath: projectPath)
+        if (status == 4) { // the R.swift file is registered
+            return
+        } else if (status != 0) { // some parts of info have been registered, but not completed
+            cleanResourceFile(atPath: projectPath)
+        }
+        
         // read the content of project.pbxproj and register R file in project.pbxproj
         if var projectContent = String.readFile(projectFile) {
             // create UUIDs
@@ -133,6 +141,8 @@ class AutoResource: NSObject {
             
             // save file
             projectContent.writeToFile(projectFile)
+        } else {
+            print("Cannot read the project.pbxproj file.")
         }
     }
     
@@ -154,7 +164,7 @@ class AutoResource: NSObject {
         // remove from project.pbxproj
         if var projectContent = String.readFile(projectFile) {
             do {
-                for pattern in AutoResource.REGISTERED_RESOURCE_FILE_PATTERNS {
+                for pattern in REGISTERED_RESOURCE_FILE_PATTERNS {
                     let regex = try NSRegularExpression(pattern: pattern, options: .CaseInsensitive)
                     projectContent = regex.stringByReplacingMatchesInString(projectContent, options: [], range: NSMakeRange(0, projectContent.characters.count), withTemplate: "")
                 }
@@ -163,6 +173,27 @@ class AutoResource: NSObject {
                 projectContent.writeToFile(projectFile)
             } catch {
             }
+        } else {
+            print("Cannot read the project.pbxproj file.")
+        }
+    }
+    
+    func checkResourceFile(atPath projectPath: String) -> Int {
+        let projectName = projectPath.componentsSeparatedByString("/").last
+        let projectFile = "\(projectPath)/\(projectName!).xcodeproj/project.pbxproj"
+        
+        // check if R.swift exists in project.pbxproj
+        if let projectContent = String.readFile(projectFile) {
+            var count = 0
+            for pattern in REGISTERED_RESOURCE_FILE_PATTERNS {
+                if let _ = projectContent.rangeOfString(pattern, options: .RegularExpressionSearch) {
+                    count++
+                }
+            }
+            return count
+        } else {
+            print("Cannot read the project.pbxproj file.")
+            return -1
         }
     }
 }
