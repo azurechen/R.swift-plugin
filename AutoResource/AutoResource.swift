@@ -34,10 +34,17 @@ class AutoResource: NSObject {
 
         let item = NSApp.mainMenu!.itemWithTitle("Edit")
         if item != nil {
+            item!.submenu!.addItem(NSMenuItem.separatorItem())
+            
+            // sync button
             let syncMenuItem = NSMenuItem(title: "Sync Resources", action: "syncAction", keyEquivalent: "")
             syncMenuItem.target = self
-            item!.submenu!.addItem(NSMenuItem.separatorItem())
             item!.submenu!.addItem(syncMenuItem)
+            
+            // clean button
+            let cleanMenuItem = NSMenuItem(title: "Clean Generated Resources", action: "cleanAction", keyEquivalent: "")
+            cleanMenuItem.target = self
+            item!.submenu!.addItem(cleanMenuItem)
         }
     }
 
@@ -45,6 +52,11 @@ class AutoResource: NSObject {
         // 1. check R file
         createResourceFileIfNeeded()
         // 2. rewrite R file
+    }
+    
+    func cleanAction() {
+        // 1. remove R file
+        cleanResourceFile()
     }
     
     func createResourceFileIfNeeded() {
@@ -77,12 +89,12 @@ class AutoResource: NSObject {
                 
                 // 3. PBXGroup section (Supporting Files)
                 do {
-                    let regex = try NSRegularExpression(pattern: "/\\* Test \\*/ = \\{\\n\\t*isa = PBXGroup;[\\s\\S]*?\\t*(.*?) /\\* Supporting Files \\*/", options: .CaseInsensitive)
+                    let regex = try NSRegularExpression(pattern: "/\\* Test \\*/ = \\{\\n\\t*?isa = PBXGroup;[\\s\\S]*?\\t*(.*?) /\\* Supporting Files \\*/", options: .CaseInsensitive)
                     let matches = regex.matchesInString(projectContent, options: [], range: NSMakeRange(0, projectContent.characters.count))
                     let mainFolderId = (projectContent as NSString).substringWithRange(matches[0].rangeAtIndex(1)) as String
                     
                     if (mainFolderId.characters.count == 24) {
-                        if let range = projectContent.rangeOfString("\(mainFolderId) /\\* Supporting Files \\*/ = \\{\\n\\t*isa = PBXGroup;\\n\\t*children = \\(", options: .RegularExpressionSearch) {
+                        if let range = projectContent.rangeOfString("\(mainFolderId) /\\* Supporting Files \\*/ = \\{\\n\\t*?isa = PBXGroup;\\n\\t*?children = \\(", options: .RegularExpressionSearch) {
                             projectContent.insert("\n\t\t\t\t\(UUID2) /* R.swift */,", atIndex: range.endIndex)
                         }
                     } else {
@@ -92,12 +104,51 @@ class AutoResource: NSObject {
                 } catch {
                 }
                 // 4. PBXSourcesBuildPhase section
-                if let range = projectContent.rangeOfString("/\\* Begin PBXSourcesBuildPhase section \\*/\\n\\t*[\\s\\S]*?files = \\(", options: .RegularExpressionSearch) {
+                if let range = projectContent.rangeOfString("/\\* Begin PBXSourcesBuildPhase section \\*/\\n\\t*?[\\s\\S]*?files = \\(", options: .RegularExpressionSearch) {
                     projectContent.insert("\n\t\t\t\t\(UUID1) /* R.swift in Sources */,", atIndex: range.endIndex)
                 }
                 
                 // save file
                 projectContent.writeToFile(projectFile)
+            }
+        }
+        
+    }
+    
+    func cleanResourceFile() {
+        let projectPath = PluginHelper.workspacePath()
+        if (projectPath != nil) {
+            let projectName = projectPath!.componentsSeparatedByString("/").last
+            let projectFile = "\(projectPath!)/\(projectName!).xcodeproj/project.pbxproj"
+            
+            // remove R file
+            let rPath = "\(projectPath!)/\(projectName!)/R.swift"
+            do {
+                try NSFileManager.defaultManager().removeItemAtPath(rPath)
+            } catch {
+            }
+            
+            // remove from project.pbxproj
+            if var projectContent = String.readFile(projectFile) {
+                do {
+                    var regexArray: [NSRegularExpression] = []
+                    // 1. PBXBuildFile section
+                    regexArray.append(try NSRegularExpression(pattern: "\\n\\t*?.*? /\\* R.swift in Sources \\*/ = \\{isa = PBXBuildFile; fileRef = .*? /\\* R.swift \\*/; \\};", options: .CaseInsensitive))
+                    // 2. PBXFileReference section
+                    regexArray.append(try NSRegularExpression(pattern: "\\n\\t*?.*? /\\* R.swift \\*/ = \\{isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = .*?R.swift; sourceTree = \"<group>\"; \\};", options: .CaseInsensitive))
+                    // 3. PBXGroup section
+                    regexArray.append(try NSRegularExpression(pattern: "\\n\\t*?.*? /\\* R.swift \\*/,", options: .CaseInsensitive))
+                    // 4. PBXSourcesBuildPhase section
+                    regexArray.append(try NSRegularExpression(pattern: "\\n\\t*?.*? /\\* R.swift in Sources \\*/,", options: .CaseInsensitive))
+                    
+                    for regex in regexArray {
+                        projectContent = regex.stringByReplacingMatchesInString(projectContent, options: [], range: NSMakeRange(0, projectContent.characters.count), withTemplate: "")
+                    }
+                    
+                    // save file
+                    projectContent.writeToFile(projectFile)
+                } catch {
+                }
             }
         }
         
