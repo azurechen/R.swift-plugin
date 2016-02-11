@@ -82,8 +82,7 @@ class AutoResource: NSObject {
     }
     
     func createResourceFile(atPath projectPath: String) {
-        let projectName = projectPath.componentsSeparatedByString("/").last
-        let rPath = "\(projectPath)/\(projectName!)/R.swift"
+        let rPath = PluginHelper.resourceFilePath(atPath: projectPath)
         
         // if the R.swift file exist, remove it
         if (NSFileManager.defaultManager().fileExistsAtPath(rPath)) {
@@ -95,17 +94,16 @@ class AutoResource: NSObject {
             NSFileManager.defaultManager().createFileAtPath(rPath, contents: nil, attributes: nil)
         }
         
-        // read template from the R_template.swift
-        let url = NSBundle(forClass: self.dynamicType).URLForResource("R_template", withExtension: "txt")
-        if var content = try? String(contentsOfURL: url!, encoding: NSUTF8StringEncoding) {
+        // generate contents of the R.swift
+        let generator = ResourceGenerator()
+        if var content = generator.generate() {
             content += "\n\n//  \(NSDate())" // for debug
             content.writeToFile(rPath)
         }
     }
     
     func registerResourceFileIfNeeded(atPath projectPath: String) {
-        let projectName = projectPath.componentsSeparatedByString("/").last
-        let projectFile = "\(projectPath)/\(projectName!).xcodeproj/project.pbxproj"
+        let projectFilePath = PluginHelper.projectFilePath(atPath: projectPath)
         
         // check status first
         let status = checkResourceFile(atPath: projectPath)
@@ -116,7 +114,7 @@ class AutoResource: NSObject {
         }
         
         // read the content of project.pbxproj and register R file in project.pbxproj
-        if var projectContent = String.readFile(projectFile) {
+        if var projectContent = String.readFile(projectFilePath) {
             // create UUIDs
             let UUID1 = PluginHelper.UUID(withLength: 24)
             let UUID2 = PluginHelper.UUID(withLength: 24)
@@ -151,17 +149,15 @@ class AutoResource: NSObject {
             }
             
             // save file
-            projectContent.writeToFile(projectFile)
+            projectContent.writeToFile(projectFilePath)
         } else {
             print("Cannot read the project.pbxproj file.")
         }
     }
     
     func removeResourceFile(atPath projectPath: String) {
-        let projectName = projectPath.componentsSeparatedByString("/").last
-        
         // remove R file
-        let rPath = "\(projectPath)/\(projectName!)/R.swift"
+        let rPath = PluginHelper.resourceFilePath(atPath: projectPath)
         do {
             try NSFileManager.defaultManager().removeItemAtPath(rPath)
         } catch {
@@ -169,11 +165,10 @@ class AutoResource: NSObject {
     }
     
     func cleanResourceFile(atPath projectPath: String) {
-        let projectName = projectPath.componentsSeparatedByString("/").last
-        let projectFile = "\(projectPath)/\(projectName!).xcodeproj/project.pbxproj"
+        let projectFilePath = PluginHelper.projectFilePath(atPath: projectPath)
         
         // remove from project.pbxproj
-        if var projectContent = String.readFile(projectFile) {
+        if var projectContent = String.readFile(projectFilePath) {
             do {
                 for pattern in REGISTERED_RESOURCE_FILE_PATTERNS {
                     let regex = try NSRegularExpression(pattern: pattern, options: .CaseInsensitive)
@@ -181,7 +176,7 @@ class AutoResource: NSObject {
                 }
                 
                 // save file
-                projectContent.writeToFile(projectFile)
+                projectContent.writeToFile(projectFilePath)
             } catch {
             }
         } else {
@@ -190,11 +185,10 @@ class AutoResource: NSObject {
     }
     
     func checkResourceFile(atPath projectPath: String) -> Int {
-        let projectName = projectPath.componentsSeparatedByString("/").last
-        let projectFile = "\(projectPath)/\(projectName!).xcodeproj/project.pbxproj"
+        let projectFilePath = PluginHelper.projectFilePath(atPath: projectPath)
         
         // check if R.swift exists in project.pbxproj
-        if let projectContent = String.readFile(projectFile) {
+        if let projectContent = String.readFile(projectFilePath) {
             var count = 0
             for pattern in REGISTERED_RESOURCE_FILE_PATTERNS {
                 if let _ = projectContent.rangeOfString(pattern, options: .RegularExpressionSearch) {

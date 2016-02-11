@@ -25,6 +25,20 @@ class PluginHelper {
         return nil
     }
     
+    static func projectName(atPath projectPath: String) -> String {
+        return projectPath.componentsSeparatedByString("/").last!
+    }
+    
+    static func projectFilePath(atPath projectPath: String) -> String {
+        let projectName = PluginHelper.projectName(atPath: projectPath)
+        return "\(projectPath)/\(projectName).xcodeproj/project.pbxproj"
+    }
+    
+    static func resourceFilePath(atPath projectPath: String) -> String {
+        let projectName = PluginHelper.projectName(atPath: projectPath)
+        return "\(projectPath)/\(projectName)/R.swift"
+    }
+    
     static func runShellCommand(command: String) -> String? {
         let pipe = NSPipe()
         let task = NSTask()
