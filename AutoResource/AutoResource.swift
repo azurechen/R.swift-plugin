@@ -61,11 +61,10 @@ class AutoResource: NSObject {
 
     func syncAction() {
         if let projectPath = PluginHelper.workspacePath() {
-            // 1. create R file
-            createResourceFileIfNeeded(atPath: projectPath)
-            // 2. register R file in project.pbxproj
+            // 1. create and write the R.swift file
+            createResourceFile(atPath: projectPath)
+            // 2. register the R.swift file in project.pbxproj
             registerResourceFileIfNeeded(atPath: projectPath)
-            // 3. rewrite R file
         } else {
             print("Cannot find the root path of the current project.")
         }
@@ -73,22 +72,34 @@ class AutoResource: NSObject {
     
     func cleanAction() {
         if let projectPath = PluginHelper.workspacePath() {
-            // 1. remove R file
+            // 1. remove the R.swift file
             removeResourceFile(atPath: projectPath)
-            // 2. clean registered R file in project.pbxproj
+            // 2. clean registered the R.swift file in project.pbxproj
             cleanResourceFile(atPath: projectPath)
         } else {
             print("Cannot find the root path of the current project.")
         }
     }
     
-    func createResourceFileIfNeeded(atPath projectPath: String) {
+    func createResourceFile(atPath projectPath: String) {
         let projectName = projectPath.componentsSeparatedByString("/").last
-        
-        // if R file doesn't exist
         let rPath = "\(projectPath)/\(projectName!)/R.swift"
+        
+        // if the R.swift file exist, remove it
+        if (NSFileManager.defaultManager().fileExistsAtPath(rPath)) {
+            removeResourceFile(atPath: projectPath)
+        }
+        
+        // create the R.swift file
         if (!NSFileManager.defaultManager().fileExistsAtPath(rPath)) {
             NSFileManager.defaultManager().createFileAtPath(rPath, contents: nil, attributes: nil)
+        }
+        
+        // read template from the R_template.swift
+        let url = NSBundle(forClass: self.dynamicType).URLForResource("R_template", withExtension: "txt")
+        if var content = try? String(contentsOfURL: url!, encoding: NSUTF8StringEncoding) {
+            content += "\n\n//  \(NSDate())" // for debug
+            content.writeToFile(rPath)
         }
     }
     
