@@ -39,6 +39,11 @@ class PluginHelper {
         return "\(projectPath)/\(projectName)/R.swift"
     }
     
+    static func baseLocalizableFilePath(atPath projectPath: String) -> String {
+        let projectName = PluginHelper.projectName(atPath: projectPath)
+        return "\(projectPath)/\(projectName)/Base.lproj/Localizable.strings"
+    }
+    
     static func runShellCommand(command: String) -> String? {
         let pipe = NSPipe()
         let task = NSTask()

@@ -9,7 +9,7 @@ import UIKit
 
 extension String {
     init(r: R.string) {
-        self = NSLocalizedString(r.rawValue, tableName: nil, bundle: NSBundle.mainBundle(), value: "", comment: "")
+        self.init(NSLocalizedString(r.rawValue, tableName: nil, bundle: NSBundle.mainBundle(), value: "", comment: ""))
     }
 }
 

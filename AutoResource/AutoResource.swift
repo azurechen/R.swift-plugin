@@ -95,7 +95,7 @@ class AutoResource: NSObject {
         }
         
         // generate contents of the R.swift
-        let generator = ResourceGenerator()
+        let generator = ResourceGenerator(path: projectPath)
         if var content = generator.generate() {
             content += "\n\n//  \(NSDate())" // for debug
             content.writeToFile(rPath)
