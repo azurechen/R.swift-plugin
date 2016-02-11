@@ -9,7 +9,7 @@ import UIKit
 
 extension String {
     init(r: R.string) {
-        self.init(NSLocalizedString(r.rawValue, tableName: nil, bundle: NSBundle.mainBundle(), value: "", comment: ""))
+        self.init(NSLocalizedString(String(r), tableName: nil, bundle: NSBundle.mainBundle(), value: "", comment: ""))
     }
 }
 
@@ -23,8 +23,7 @@ class R {
         case __ = ""
     }
     
-    enum string: String {
-        case __ = ""
+    enum string {
     }
     
 }

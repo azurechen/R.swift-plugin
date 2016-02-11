@@ -48,11 +48,11 @@ class ResourceGenerator {
                 var generatedContent = ""
                 for match in matches {
                     let rID = (originalContent as NSString).substringWithRange(match.rangeAtIndex(1)) as String
-                    generatedContent += "        case \(rID) = \"\(rID)\"\n"
+                    generatedContent += "        case \(rID)\n"
                 }
                 
                 // replace the inner content of enum string
-                let regex2 = try NSRegularExpression(pattern: "enum string: String \\{\\n([\\s\\S]*?\\n).*?\\}", options: .CaseInsensitive)
+                let regex2 = try NSRegularExpression(pattern: "enum string \\{\\n([\\s\\S]*?)\\s{4}\\}", options: .CaseInsensitive)
                 let range = regex2.matchesInString(content!, options: [], range: NSMakeRange(0, content!.characters.count))[0].rangeAtIndex(1)
                 content = (content! as NSString).stringByReplacingCharactersInRange(range, withString: generatedContent)
             } catch {
