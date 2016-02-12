@@ -21,10 +21,11 @@ class R {
     
 }
 
-extension UIColor {
-    convenience init(r: R.color) {
-        let argb = r.rawValue
+extension NSObject {
 
+    func getColor(r: R.color) -> UIColor {
+        let argb = r.rawValue
+        
         var alpha: CGFloat = 1.0
         var red:   CGFloat = 0.0
         var green: CGFloat = 0.0
@@ -63,18 +64,14 @@ extension UIColor {
         } else {
             print("Invalid RGB string, missing '#' as prefix", terminator: "")
         }
-        self.init(red: red, green: green, blue: blue, alpha: alpha)
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
     }
-}
-
-extension UIImage {
-    convenience init?(r: R.image) {
-        self.init(named: String(r))
+    
+    func getImage(r: R.image) -> UIImage? {
+        return UIImage(named: String(r))
     }
-}
-
-extension String {
-    init(r: R.string) {
-        self.init(NSLocalizedString(String(r), tableName: nil, bundle: NSBundle.mainBundle(), value: "", comment: ""))
+    
+    func getString(r: R.string) -> String {
+        return NSLocalizedString(String(r), tableName: nil, bundle: NSBundle.mainBundle(), value: "", comment: "")
     }
 }
