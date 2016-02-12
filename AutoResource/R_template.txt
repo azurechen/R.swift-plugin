@@ -13,8 +13,7 @@ class R {
         case __ = ""
     }
     
-    enum image: String {
-        case __ = ""
+    enum image {
     }
     
     enum string {
@@ -65,6 +64,12 @@ extension UIColor {
             print("Invalid RGB string, missing '#' as prefix", terminator: "")
         }
         self.init(red: red, green: green, blue: blue, alpha: alpha)
+    }
+}
+
+extension UIImage {
+    convenience init?(r: R.image) {
+        self.init(named: String(r))
     }
 }
 

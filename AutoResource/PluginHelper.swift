@@ -63,6 +63,11 @@ class PluginHelper {
         return ""
     }
     
+    static func imageDirPath(atPath projectPath: String) -> String {
+        let projectName = PluginHelper.projectName(atPath: projectPath)
+        return "\(projectPath)/\(projectName)/Images.xcassets"
+    }
+    
     static func runShellCommand(command: String) -> String? {
         let pipe = NSPipe()
         let task = NSTask()

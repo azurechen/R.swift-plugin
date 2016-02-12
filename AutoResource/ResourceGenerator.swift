@@ -26,6 +26,8 @@ class ResourceGenerator {
         if (content != nil) {
             // 2. generate colors
             generateColors()
+            // 3. generate images
+            generateImages()
             // 4. generate localizable strings
             generateStrings()
         }
@@ -43,6 +45,7 @@ class ResourceGenerator {
         // read the Color.strings file
         if let originalContent = String.readFile(colorFilePath) {
             if let matches = originalContent.matches(PATTERN_STRINGS) {
+                
                 // generate enum members
                 var generatedContent = ""
                 for match in matches {
@@ -56,11 +59,30 @@ class ResourceGenerator {
         }
     }
     
+    private func generateImages() {
+        let baseStringFilePath = PluginHelper.imageDirPath(atPath: projectPath)
+        // read images in the Images.xcassets dir
+        if let ls = PluginHelper.runShellCommand("ls \(baseStringFilePath) | grep imageset") {
+            let imagePaths = ls.componentsSeparatedByString("\n")
+            
+            // generate enum members
+            var generatedContent = ""
+            for imagePath in imagePaths {
+                let key = imagePath.stringByReplacingOccurrencesOfString(".imageset", withString: "")
+                generatedContent += "        case \(key)\n"
+            }
+            // replace members of enum string
+            replaceEnumMembers("image", members: generatedContent)
+        }
+        
+    }
+    
     private func generateStrings() {
         let baseStringFilePath = PluginHelper.baseLocalizableFilePath(atPath: projectPath)
         // read the Localizable.strings file
         if let originalContent = String.readFile(baseStringFilePath) {
             if let matches = originalContent.matches(PATTERN_STRINGS) {
+                
                 // generate enum members
                 var generatedContent = ""
                 for match in matches {
