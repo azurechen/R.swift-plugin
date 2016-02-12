@@ -24,7 +24,9 @@ class ResourceGenerator {
         initFromTemplate()
         
         if (content != nil) {
-            // 2. generate localizable strings
+            // 2. generate colors
+            generateColors()
+            // 4. generate localizable strings
             generateStrings()
         }
         
@@ -36,28 +38,44 @@ class ResourceGenerator {
         content = try? String(contentsOfURL: url!, encoding: NSUTF8StringEncoding)
     }
     
+    private func generateColors() {
+        let colorFilePath = PluginHelper.colorFilePath(atPath: projectPath)
+        // read the Color.strings file
+        if let originalContent = String.readFile(colorFilePath) {
+            if let matches = originalContent.matches(PATTERN_STRINGS) {
+                // generate enum members
+                var generatedContent = ""
+                for match in matches {
+                    let key = (originalContent as NSString).substringWithRange(match.rangeAtIndex(1)) as String
+                    let value = (originalContent as NSString).substringWithRange(match.rangeAtIndex(2)) as String
+                    generatedContent += "        case \(key) = \"\(value)\"\n"
+                }
+                // replace members of enum color
+                replaceEnumMembers("color: String", members: generatedContent)
+            }
+        }
+    }
+    
     private func generateStrings() {
         let baseStringFilePath = PluginHelper.baseLocalizableFilePath(atPath: projectPath)
         // read the Localizable.strings file
         if let originalContent = String.readFile(baseStringFilePath) {
-            do {
-                let regex = try NSRegularExpression(pattern: PATTERN_STRINGS, options: .CaseInsensitive)
-                let matches = regex.matchesInString(originalContent, options: [], range: NSMakeRange(0, originalContent.characters.count))
-                
+            if let matches = originalContent.matches(PATTERN_STRINGS) {
                 // generate enum members
                 var generatedContent = ""
                 for match in matches {
-                    let rID = (originalContent as NSString).substringWithRange(match.rangeAtIndex(1)) as String
-                    generatedContent += "        case \(rID)\n"
+                    let key = (originalContent as NSString).substringWithRange(match.rangeAtIndex(1)) as String
+                    generatedContent += "        case \(key)\n"
                 }
-                
-                // replace the inner content of enum string
-                let regex2 = try NSRegularExpression(pattern: "enum string \\{\\n([\\s\\S]*?)\\s{4}\\}", options: .CaseInsensitive)
-                let range = regex2.matchesInString(content!, options: [], range: NSMakeRange(0, content!.characters.count))[0].rangeAtIndex(1)
-                content = (content! as NSString).stringByReplacingCharactersInRange(range, withString: generatedContent)
-            } catch {
+                // replace members of enum string
+                replaceEnumMembers("string", members: generatedContent)
             }
         }
+    }
+    
+    private func replaceEnumMembers(identifier: String, members: String) {
+        let range = content!.matches("enum \(identifier) \\{\\n([\\s\\S]*?)\\s{4}\\}")![0].rangeAtIndex(1)
+        content = (content! as NSString).stringByReplacingCharactersInRange(range, withString: members)
     }
     
 }

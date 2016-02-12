@@ -28,4 +28,13 @@ extension String {
         } catch {
         }
     }
+    
+    func matches(pattern: String) -> [NSTextCheckingResult]? {
+        do {
+            let regex = try NSRegularExpression(pattern: pattern, options: .CaseInsensitive)
+            return regex.matchesInString(self, options: [], range: NSMakeRange(0, self.characters.count))
+        } catch {
+            return nil
+        }
+    }
 }

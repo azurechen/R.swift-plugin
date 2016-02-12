@@ -44,6 +44,25 @@ class PluginHelper {
         return "\(projectPath)/\(projectName)/Base.lproj/Localizable.strings"
     }
     
+    static func colorFilePath(atPath projectPath: String) -> String {
+        let projectName = PluginHelper.projectName(atPath: projectPath)
+        let projectFilePath = PluginHelper.projectFilePath(atPath: projectPath)
+        
+        if let projectContent = String.readFile(projectFilePath) {
+            do {
+                let regex = try NSRegularExpression(pattern: "/\\* Color.strings \\*/.*?path = (.*?);", options: .CaseInsensitive)
+                let matches = regex.matchesInString(projectContent, options: [], range: NSMakeRange(0, projectContent.characters.count))
+                if (!matches.isEmpty) {
+                    let relativePath = (projectContent as NSString).substringWithRange(matches[0].rangeAtIndex(1)) as String
+                    return "\(projectPath)/\(projectName)/\(relativePath)"
+                }
+            } catch {
+            }
+        }
+        
+        return ""
+    }
+    
     static func runShellCommand(command: String) -> String? {
         let pipe = NSPipe()
         let task = NSTask()

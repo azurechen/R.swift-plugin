@@ -131,11 +131,16 @@ class AutoResource: NSObject {
             do {
                 let regex = try NSRegularExpression(pattern: "/\\* Test \\*/ = \\{\\n*?\\t*?isa = PBXGroup;[\\s\\S]*?\\t*(.{24}?) /\\* Supporting Files \\*/", options: .CaseInsensitive)
                 let matches = regex.matchesInString(projectContent, options: [], range: NSMakeRange(0, projectContent.characters.count))
-                let mainFolderId = (projectContent as NSString).substringWithRange(matches[0].rangeAtIndex(1)) as String
+                if (!matches.isEmpty) {
+                    let mainFolderId = (projectContent as NSString).substringWithRange(matches[0].rangeAtIndex(1)) as String
                 
-                if (mainFolderId.characters.count == 24) {
-                    if let range = projectContent.rangeOfString("\(mainFolderId) /\\* Supporting Files \\*/ = \\{\\n*?\\t*?isa = PBXGroup;\\n*?\\t*?children = \\(", options: .RegularExpressionSearch) {
-                        projectContent.insert("\n\t\t\t\t\(UUID2) /* R.swift */,", atIndex: range.endIndex)
+                    if (mainFolderId.characters.count == 24) {
+                        if let range = projectContent.rangeOfString("\(mainFolderId) /\\* Supporting Files \\*/ = \\{\\n*?\\t*?isa = PBXGroup;\\n*?\\t*?children = \\(", options: .RegularExpressionSearch) {
+                            projectContent.insert("\n\t\t\t\t\(UUID2) /* R.swift */,", atIndex: range.endIndex)
+                        }
+                    } else {
+                        print("Cannot find the Supporting Files group.")
+                        return
                     }
                 } else {
                     print("Cannot find the Supporting Files group.")
