@@ -43,19 +43,40 @@ class AutoResource: NSObject {
     func createMenuItems() {
         removeObserver()
 
-        let item = NSApp.mainMenu!.itemWithTitle("Edit")
-        if item != nil {
+        let item = NSApp.mainMenu!.itemWithTitle("Product")
+        if (item != nil) {
             item!.submenu!.addItem(NSMenuItem.separatorItem())
             
-            // sync button
-            let syncMenuItem = NSMenuItem(title: "Sync Resources", action: "syncAction", keyEquivalent: "")
-            syncMenuItem.target = self
-            item!.submenu!.addItem(syncMenuItem)
+            // first level item
+            let pluginMenu = NSMenu()
+            let pluginItem = NSMenuItem(title: "Auto Resources", action: nil, keyEquivalent: "")
+            item!.submenu!.addItem(pluginItem)
+            item!.submenu!.setSubmenu(pluginMenu, forItem: pluginItem)
             
-            // clean button
-            let cleanMenuItem = NSMenuItem(title: "Clean Generated Resources", action: "cleanAction", keyEquivalent: "")
-            cleanMenuItem.target = self
-            item!.submenu!.addItem(cleanMenuItem)
+            // second level items
+//            // 1. Status
+//            let versionItem = NSMenuItem(title: "Status: Enabled", action: nil, keyEquivalent: "")
+//            pluginMenu.addItem(versionItem)
+//            
+//            // separator
+//            pluginMenu.addItem(NSMenuItem.separatorItem())
+//            
+//            // 2. Enable / Disable
+//            let toggleItem = NSMenuItem(title: "Disable", action: nil, keyEquivalent: "")
+//            pluginMenu.addItem(toggleItem)
+//            
+//            // separator
+//            pluginMenu.addItem(NSMenuItem.separatorItem())
+            
+            // 3. sync
+            let syncItem = NSMenuItem(title: "Sync", action: "syncAction", keyEquivalent: "")
+            syncItem.target = self
+            pluginMenu.addItem(syncItem)
+            
+            // 4. clean
+            let cleanItem = NSMenuItem(title: "Clean", action: "cleanAction", keyEquivalent: "")
+            cleanItem.target = self
+            pluginMenu.addItem(cleanItem)
         }
     }
 
@@ -97,7 +118,7 @@ class AutoResource: NSObject {
         // generate contents of the R.swift
         let generator = ResourceGenerator(path: projectPath)
         if var content = generator.generate() {
-            content += "\n\n//  \(NSDate())" // for debug
+//            content += "\n\n//  \(NSDate())" // for debug
             content.writeToFile(rPath)
         }
     }
