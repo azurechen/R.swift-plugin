@@ -26,7 +26,8 @@ class PluginHelper {
     }
     
     static func projectName(atPath projectPath: String) -> String {
-        return projectPath.componentsSeparatedByString("/").last!
+        let projectFilePath = runShellCommand("ls \(projectPath) | grep .xcodeproj")
+        return projectFilePath!.stringByReplacingOccurrencesOfString(".xcodeproj", withString: "")
     }
     
     static func projectFilePath(atPath projectPath: String) -> String {

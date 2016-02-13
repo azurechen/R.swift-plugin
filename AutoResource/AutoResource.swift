@@ -147,7 +147,7 @@ class AutoResource: NSObject {
             }
             // 3. PBXGroup section (Supporting Files)
             do {
-                let regex = try NSRegularExpression(pattern: "/\\* Test \\*/ = \\{\\n*?\\t*?isa = PBXGroup;[\\s\\S]*?\\t*(.{24}?) /\\* Supporting Files \\*/", options: .CaseInsensitive)
+                let regex = try NSRegularExpression(pattern: "/\\*.*?\\*/ = \\{\\n*?\\t*?isa = PBXGroup;[\\s\\S]*?\\t*(.{24}?) /\\* Supporting Files \\*/", options: .CaseInsensitive)
                 let matches = regex.matchesInString(projectContent, options: [], range: NSMakeRange(0, projectContent.characters.count))
                 if (!matches.isEmpty) {
                     let mainFolderId = (projectContent as NSString).substringWithRange(matches[0].rangeAtIndex(1)) as String
