@@ -12,11 +12,11 @@ class ResourceGenerator {
     
     let PATTERN_STRINGS = "\"(.*?)\"[\\n\\s]*?=[\\n\\s]*?\"(.*?)\"[\\n\\s]*?;"
     
-    var projectPath: String
+    var project: (path: String, name: String)
     var content: String?
     
-    init(path: String) {
-        self.projectPath = path
+    init(project: (path: String, name: String)) {
+        self.project = project
     }
     
     func generate() -> String? {
@@ -42,7 +42,7 @@ class ResourceGenerator {
     }
     
     private func generateColors() {
-        let colorFilePath = PluginHelper.colorFilePath(atPath: projectPath)
+        let colorFilePath = PluginHelper.colorFilePath(inProject: project)
         // read the Color.strings file
         if let originalContent = String.readFile(colorFilePath) {
             if let matches = originalContent.matches(PATTERN_STRINGS) {
@@ -61,7 +61,7 @@ class ResourceGenerator {
     }
     
     private func generateImages() {
-        let baseStringFilePath = PluginHelper.imageDirPath(atPath: projectPath)
+        let baseStringFilePath = PluginHelper.imageDirPath(inProject: project)
         // read images in the Images.xcassets dir
         if let ls = PluginHelper.runShellCommand("ls \(baseStringFilePath) | grep imageset") {
             let imagePaths = ls.componentsSeparatedByString("\n")
@@ -79,7 +79,7 @@ class ResourceGenerator {
     }
     
     private func generateStrings() {
-        let baseStringFilePath = PluginHelper.baseLocalizableFilePath(atPath: projectPath)
+        let baseStringFilePath = PluginHelper.baseLocalizableFilePath(inProject: project)
         // read the Localizable.strings file
         if let originalContent = String.readFile(baseStringFilePath) {
             if let matches = originalContent.matches(PATTERN_STRINGS) {

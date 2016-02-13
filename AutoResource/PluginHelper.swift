@@ -10,7 +10,15 @@ import AppKit
 
 class PluginHelper {
     
-    static func workspacePath() -> String? {
+    static func project() -> (path: String, name: String)? {
+        if let path = workspacePath(), let name = projectName(atPath: path) {
+            return (path, name)
+        } else {
+            return nil
+        }
+    }
+    
+    private static func workspacePath() -> String? {
         if let anyClass = NSClassFromString("IDEWorkspaceWindowController") as? NSObject.Type,
             let windowControllers = anyClass.valueForKey("workspaceWindowControllers") as? [NSObject],
             let window = NSApp.keyWindow ?? NSApp.windows.first {
@@ -25,29 +33,25 @@ class PluginHelper {
         return nil
     }
     
-    static func projectName(atPath projectPath: String) -> String {
+    private static func projectName(atPath projectPath: String) -> String? {
         let projectFilePath = runShellCommand("ls \(projectPath) | grep .xcodeproj")
-        return projectFilePath!.stringByReplacingOccurrencesOfString(".xcodeproj", withString: "")
+        return projectFilePath?.stringByReplacingOccurrencesOfString(".xcodeproj", withString: "")
     }
     
-    static func projectFilePath(atPath projectPath: String) -> String {
-        let projectName = PluginHelper.projectName(atPath: projectPath)
-        return "\(projectPath)/\(projectName).xcodeproj/project.pbxproj"
+    static func projectFilePath(inProject project: (path: String, name: String)) -> String {
+        return "\(project.path)/\(project.name).xcodeproj/project.pbxproj"
     }
     
-    static func resourceFilePath(atPath projectPath: String) -> String {
-        let projectName = PluginHelper.projectName(atPath: projectPath)
-        return "\(projectPath)/\(projectName)/R.swift"
+    static func resourceFilePath(inProject project: (path: String, name: String)) -> String {
+        return "\(project.path)/\(project.name)/R.swift"
     }
     
-    static func baseLocalizableFilePath(atPath projectPath: String) -> String {
-        let projectName = PluginHelper.projectName(atPath: projectPath)
-        return "\(projectPath)/\(projectName)/Base.lproj/Localizable.strings"
+    static func baseLocalizableFilePath(inProject project: (path: String, name: String)) -> String {
+        return "\(project.path)/\(project.name)/Base.lproj/Localizable.strings"
     }
     
-    static func colorFilePath(atPath projectPath: String) -> String {
-        let projectName = PluginHelper.projectName(atPath: projectPath)
-        let projectFilePath = PluginHelper.projectFilePath(atPath: projectPath)
+    static func colorFilePath(inProject project: (path: String, name: String)) -> String {
+        let projectFilePath = PluginHelper.projectFilePath(inProject: project)
         
         if let projectContent = String.readFile(projectFilePath) {
             do {
@@ -55,7 +59,7 @@ class PluginHelper {
                 let matches = regex.matchesInString(projectContent, options: [], range: NSMakeRange(0, projectContent.characters.count))
                 if (!matches.isEmpty) {
                     let relativePath = (projectContent as NSString).substringWithRange(matches[0].rangeAtIndex(1)) as String
-                    return "\(projectPath)/\(projectName)/\(relativePath)"
+                    return "\(project.path)/\(projectName)/\(relativePath)"
                 }
             } catch {
             }
@@ -64,9 +68,8 @@ class PluginHelper {
         return ""
     }
     
-    static func imageDirPath(atPath projectPath: String) -> String {
-        let projectName = PluginHelper.projectName(atPath: projectPath)
-        return "\(projectPath)/\(projectName)/Images.xcassets"
+    static func imageDirPath(inProject project: (path: String, name: String)) -> String {
+        return "\(project.path)/\(project.name)/Images.xcassets"
     }
     
     static func runShellCommand(command: String) -> String? {

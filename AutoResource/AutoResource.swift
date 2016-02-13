@@ -81,33 +81,33 @@ class AutoResource: NSObject {
     }
 
     func syncAction() {
-        if let projectPath = PluginHelper.workspacePath() {
+        if let project = PluginHelper.project() {
             // 1. create and write the R.swift file
-            createResourceFile(atPath: projectPath)
+            createResourceFile(inProject: project)
             // 2. register the R.swift file in project.pbxproj
-            registerResourceFileIfNeeded(atPath: projectPath)
+            registerResourceFileIfNeeded(inProject: project)
         } else {
             print("Cannot find the root path of the current project.")
         }
     }
     
     func cleanAction() {
-        if let projectPath = PluginHelper.workspacePath() {
+        if let project = PluginHelper.project() {
             // 1. remove the R.swift file
-            removeResourceFile(atPath: projectPath)
+            removeResourceFile(inProject: project)
             // 2. clean registered the R.swift file in project.pbxproj
-            cleanResourceFile(atPath: projectPath)
+            cleanResourceFile(inProject: project)
         } else {
             print("Cannot find the root path of the current project.")
         }
     }
     
-    func createResourceFile(atPath projectPath: String) {
-        let rPath = PluginHelper.resourceFilePath(atPath: projectPath)
+    func createResourceFile(inProject project: (path: String, name: String)) {
+        let rPath = PluginHelper.resourceFilePath(inProject: project)
         
         // if the R.swift file exist, remove it
         if (NSFileManager.defaultManager().fileExistsAtPath(rPath)) {
-            removeResourceFile(atPath: projectPath)
+            removeResourceFile(inProject: project)
         }
         
         // create the R.swift file
@@ -116,19 +116,19 @@ class AutoResource: NSObject {
         }
         
         // generate contents of the R.swift
-        let generator = ResourceGenerator(path: projectPath)
+        let generator = ResourceGenerator(project: project)
         generator.generate()?.writeToFile(rPath)
     }
     
-    func registerResourceFileIfNeeded(atPath projectPath: String) {
-        let projectFilePath = PluginHelper.projectFilePath(atPath: projectPath)
+    func registerResourceFileIfNeeded(inProject project: (path: String, name: String)) {
+        let projectFilePath = PluginHelper.projectFilePath(inProject: project)
         
         // check status first
-        let status = checkResourceFile(atPath: projectPath)
+        let status = checkResourceFile(inProject: project)
         if (status == 4) { // the R.swift file is registered
             return
         } else if (status != 0) { // some parts of info have been registered, but not completed
-            cleanResourceFile(atPath: projectPath)
+            cleanResourceFile(inProject: project)
         }
         
         // read the content of project.pbxproj and register R file in project.pbxproj
@@ -178,17 +178,17 @@ class AutoResource: NSObject {
         }
     }
     
-    func removeResourceFile(atPath projectPath: String) {
+    func removeResourceFile(inProject project: (path: String, name: String)) {
         // remove R file
-        let rPath = PluginHelper.resourceFilePath(atPath: projectPath)
+        let rPath = PluginHelper.resourceFilePath(inProject: project)
         do {
             try NSFileManager.defaultManager().removeItemAtPath(rPath)
         } catch {
         }
     }
     
-    func cleanResourceFile(atPath projectPath: String) {
-        let projectFilePath = PluginHelper.projectFilePath(atPath: projectPath)
+    func cleanResourceFile(inProject project: (path: String, name: String)) {
+        let projectFilePath = PluginHelper.projectFilePath(inProject: project)
         
         // remove from project.pbxproj
         if var projectContent = String.readFile(projectFilePath) {
@@ -207,8 +207,8 @@ class AutoResource: NSObject {
         }
     }
     
-    func checkResourceFile(atPath projectPath: String) -> Int {
-        let projectFilePath = PluginHelper.projectFilePath(atPath: projectPath)
+    func checkResourceFile(inProject project: (path: String, name: String)) -> Int {
+        let projectFilePath = PluginHelper.projectFilePath(inProject: project)
         
         // check if R.swift exists in project.pbxproj
         if let projectContent = String.readFile(projectFilePath) {
