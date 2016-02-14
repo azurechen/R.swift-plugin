@@ -1,7 +1,7 @@
 Auto Resource Plugin for Xcode
 ==============================
 
-This Xcode Plugin make you access resources like colors, images or strings easier and more accurately. It provides functions like `Android Resource Manager` in Swift.
+This Xcode Plugin make you access resources like `colors`, `images` or `localizable strings` easier and more accurately. It provides functions like `Android Resource Manager` in Swift.
 
 It generates references for colors, images and localizable strings <del>automatically</del>. (It will be supported in the next version)
 
@@ -16,13 +16,13 @@ Get strings by calling `getString(R.string.{string_name})`
 let str: String = getString(R.string.hello_world)
 ```
 
-Even use the abbreviated form
+Or use the abbreviated form
 
 ```swift
 let str: String = getString(.hello_world)
 ```
 
-If you have some localizable string files, the `str` will show the text in your language.
+If you have some localizable string files, the `getString(R.string.{string_name})` will show the text in your language.
 
 * `Base.lproj/Localizable.strings`
 
@@ -48,7 +48,9 @@ If you have some localizable string files, the `str` will show the text in your 
 
 ###Images
 
-Assume this is any `*.xcassets` folder
+Assume there is any `*.xcassets` folder in your project
+
+* `Images.xcassets`
 
 <img src="./screenshots/pic_assets.png" width = "640" alt="Image.xcassets" />
 
@@ -66,7 +68,7 @@ imageView.image = getImage(.icon_play)
 
 ###Colors
 
-Create a `Color.strings` file first and define some colors you like. The hex code of colors should follow `#RRGGBB`, `#RGB`, `#AARRGGBB` and `#ARGB` rules.
+Create a `Color.strings` file first and define some colors you like. The hex code of colors should follow `#RRGGBB`, `#RGB`, `#AARRGGBB` or `#ARGB` rules.
 
 * `Color.strings`
 
