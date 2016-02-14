@@ -42,40 +42,44 @@ class ResourceGenerator {
     }
     
     private func generateColors() {
-        let colorFilePath = PluginHelper.colorFilePath(inProject: project)
-        // read the Color.strings file
-        if let originalContent = String.readFile(colorFilePath) {
-            if let matches = originalContent.matches(PATTERN_STRINGS) {
-                
-                // generate enum members
-                var generatedContent = ""
-                for match in matches {
-                    let key = (originalContent as NSString).substringWithRange(match.rangeAtIndex(1)) as String
-                    let value = (originalContent as NSString).substringWithRange(match.rangeAtIndex(2)) as String
-                    generatedContent += "        case \(key) = \"\(value)\"\n"
+        let colorFilePaths = PluginHelper.colorFilePaths(inProject: project)
+        
+        // generate enum members
+        var generatedContent = ""
+        for colorFilePath in colorFilePaths {
+            // read the Color.strings file
+            if let originalContent = String.readFile(colorFilePath) {
+                if let matches = originalContent.matches(PATTERN_STRINGS) {
+                    for match in matches {
+                        let key = (originalContent as NSString).substringWithRange(match.rangeAtIndex(1)) as String
+                        let value = (originalContent as NSString).substringWithRange(match.rangeAtIndex(2)) as String
+                        generatedContent += "        case \(key) = \"\(value)\"\n"
+                    }
+                    // replace members of enum color
+                    replaceEnumMembers("color: String", members: generatedContent)
                 }
-                // replace members of enum color
-                replaceEnumMembers("color: String", members: generatedContent)
             }
         }
     }
     
     private func generateImages() {
-        let baseStringFilePath = PluginHelper.imageDirPath(inProject: project)
-        // read images in the Images.xcassets dir
-        if let ls = PluginHelper.runShellCommand("ls \(baseStringFilePath) | grep imageset") {
-            let imagePaths = ls.componentsSeparatedByString("\n")
-            
-            // generate enum members
-            var generatedContent = ""
-            for imagePath in imagePaths {
-                let key = imagePath.stringByReplacingOccurrencesOfString(".imageset", withString: "")
-                generatedContent += "        case \(key)\n"
-            }
-            // replace members of enum string
-            replaceEnumMembers("image", members: generatedContent)
-        }
+        let imageDirPaths = PluginHelper.imageDirPaths(inProject: project)
         
+        // generate enum members
+        var generatedContent = ""
+        for imageDirPath in imageDirPaths {
+            // read images in the Images.xcassets dir
+            if let ls = PluginHelper.runShellCommand("ls \(imageDirPath) | grep imageset") {
+                let imagePaths = ls.componentsSeparatedByString("\n")
+                
+                for imagePath in imagePaths {
+                    let key = imagePath.stringByReplacingOccurrencesOfString(".imageset", withString: "")
+                    generatedContent += "        case \(key)\n"
+                }
+                // replace members of enum string
+                replaceEnumMembers("image", members: generatedContent)
+            }
+        }
     }
     
     private func generateStrings() {

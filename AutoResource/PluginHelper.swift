@@ -50,26 +50,32 @@ class PluginHelper {
         return "\(project.path)/\(project.name)/Base.lproj/Localizable.strings"
     }
     
-    static func colorFilePath(inProject project: (path: String, name: String)) -> String {
+    static func colorFilePaths(inProject project: (path: String, name: String)) -> [String] {
+        return findFilePaths("Color.strings", inProject: project)
+    }
+    
+    static func imageDirPaths(inProject project: (path: String, name: String)) -> [String] {
+        return findFilePaths(".*?.xcassets", inProject: project)
+    }
+    
+    private static func findFilePaths(pattern: String, inProject project: (path: String, name: String)) -> [String] {
         let projectFilePath = PluginHelper.projectFilePath(inProject: project)
         
+        var paths: [String] = []
         if let projectContent = String.readFile(projectFilePath) {
             do {
-                let regex = try NSRegularExpression(pattern: "/\\* Color.strings \\*/.*?path = (.*?);", options: .CaseInsensitive)
+                let regex = try NSRegularExpression(pattern: "/\\* \(pattern) \\*/.*?path = (.*?);", options: .CaseInsensitive)
                 let matches = regex.matchesInString(projectContent, options: [], range: NSMakeRange(0, projectContent.characters.count))
-                if (!matches.isEmpty) {
-                    let relativePath = (projectContent as NSString).substringWithRange(matches[0].rangeAtIndex(1)) as String
-                    return "\(project.path)/\(project.name)/\(relativePath)"
+                
+                for match in matches {
+                    let relativePath = (projectContent as NSString).substringWithRange(match.rangeAtIndex(1)) as String
+                    paths.append("\(project.path)/\(project.name)/\(relativePath)")
                 }
             } catch {
             }
         }
         
-        return ""
-    }
-    
-    static func imageDirPath(inProject project: (path: String, name: String)) -> String {
-        return "\(project.path)/\(project.name)/Images.xcassets"
+        return paths
     }
     
     static func runShellCommand(command: String) -> String? {
