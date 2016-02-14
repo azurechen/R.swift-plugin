@@ -59,7 +59,7 @@ class PluginHelper {
                 let matches = regex.matchesInString(projectContent, options: [], range: NSMakeRange(0, projectContent.characters.count))
                 if (!matches.isEmpty) {
                     let relativePath = (projectContent as NSString).substringWithRange(matches[0].rangeAtIndex(1)) as String
-                    return "\(project.path)/\(projectName)/\(relativePath)"
+                    return "\(project.path)/\(project.name)/\(relativePath)"
                 }
             } catch {
             }
