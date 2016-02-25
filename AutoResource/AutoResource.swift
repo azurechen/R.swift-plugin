@@ -30,6 +30,11 @@ class AutoResource: NSObject {
 
         super.init()
         center.addObserver(self, selector: Selector("createMenuItems"), name: NSApplicationDidFinishLaunchingNotification, object: nil)
+        
+        // swizzle
+        self.swizzleClass(NSClassFromString("IDEEditorDocument")!,
+            replace: Selector("presentedItemDidChange"),
+            with: Selector("hook_presentedItemDidChange"))
     }
 
     deinit {
