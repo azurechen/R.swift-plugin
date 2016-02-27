@@ -31,10 +31,12 @@ class AutoResource: NSObject {
         super.init()
         center.addObserver(self, selector: Selector("createMenuItems"), name: NSApplicationDidFinishLaunchingNotification, object: nil)
         
-        // swizzle
-        self.swizzleClass(NSClassFromString("IDEEditorDocument")!,
-            replace: Selector("presentedItemDidChange"),
-            with: Selector("hook_presentedItemDidChange"))
+        self.swizzleClass(NSTabView.self,
+            replace: Selector("selectTabViewItem:"),
+            with: Selector("hook_selectTabViewItem:"))
+        self.swizzleClass(NSTabViewItem.self,
+            replace: Selector("setLabel:"),
+            with: Selector("hook_setLabel:"))
     }
 
     deinit {
