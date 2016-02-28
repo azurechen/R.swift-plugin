@@ -1,5 +1,5 @@
-Auto Resource Plugin for Xcode
-==============================
+Rauto Plugin for Xcode
+======================
 
 This Xcode Plugin make you access resources like `colors`, `images` or `localizable strings` easier and more accurately. It provides functions like `Android Resource Manager` in Swift.
 
@@ -103,11 +103,11 @@ or
 
 or
 
-1. Download and unzip a <a href="https://github.com/azurechen/AutoResource/releases">release</a> to `~/Library/Application Support/Developer/Shared/Xcode/Plug-ins`
+1. Download and unzip a <a href="https://github.com/azurechen/Rauto/releases">release</a> to `~/Library/Application Support/Developer/Shared/Xcode/Plug-ins`
 2. `Restart` Xcode
 
 After restarting Xcode, open any project and 
 
-1. Click `Product` -> `AutoResource` -> `Sync`
-2. If you don't use AutoResource in this project anymore, click `Product` -> `AutoResource` -> `Clean` 
+1. Click `Product` -> `Rauto` -> `Sync`
+2. If you don't use Rauto in this project anymore, click `Product` -> `Rauto` -> `Clean` 
 

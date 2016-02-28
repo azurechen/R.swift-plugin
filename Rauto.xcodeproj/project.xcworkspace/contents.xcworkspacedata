@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:AutoResource.xcodeproj">
+      location = "self:/Users/AzureChen/Code/Xcode/Rauto/Rauto.xcodeproj">
    </FileRef>
 </Workspace>

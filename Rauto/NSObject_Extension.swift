@@ -13,7 +13,7 @@ extension NSObject {
         let appName = NSBundle.mainBundle().infoDictionary?["CFBundleName"] as? NSString
         if appName == "Xcode" {
         	if sharedPlugin == nil {
-        		sharedPlugin = AutoResource(bundle: bundle)
+        		sharedPlugin = Rauto(bundle: bundle)
         	}
         }
     }

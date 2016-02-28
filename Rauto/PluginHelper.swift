@@ -1,6 +1,6 @@
 //
 //  PluginHelper.swift
-//  AutoResource
+//  Rauto
 //
 //  Created by Azure Chen on 2/8/16.
 //  Copyright © 2016 AzureChen. All rights reserved.

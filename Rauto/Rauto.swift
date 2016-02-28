@@ -1,5 +1,5 @@
 //
-//  AutoResource.swift
+//  Rauto.swift
 //
 //  Created by AzureChen on 2/8/16.
 //  Copyright © 2016 AzureChen. All rights reserved.
@@ -7,9 +7,9 @@
 
 import AppKit
 
-var sharedPlugin: AutoResource?
+var sharedPlugin: Rauto?
 
-class AutoResource: NSObject {
+class Rauto: NSObject {
 
     var bundle: NSBundle
     lazy var center = NSNotificationCenter.defaultCenter()
@@ -56,7 +56,7 @@ class AutoResource: NSObject {
             
             // first level item
             let pluginMenu = NSMenu()
-            let pluginItem = NSMenuItem(title: "Auto Resources", action: nil, keyEquivalent: "")
+            let pluginItem = NSMenuItem(title: "Rauto", action: nil, keyEquivalent: "")
             item!.submenu!.addItem(pluginItem)
             item!.submenu!.setSubmenu(pluginMenu, forItem: pluginItem)
             

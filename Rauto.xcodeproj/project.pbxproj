@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		53282FAF1C67C5F100081171 /* AutoResource.xcscheme in Resources */ = {isa = PBXBuildFile; fileRef = 53282FAE1C67C5F100081171 /* AutoResource.xcscheme */; };
-		53282FB11C67C5F100081171 /* AutoResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53282FB01C67C5F100081171 /* AutoResource.swift */; };
+		53282FAF1C67C5F100081171 /* Rauto.xcscheme in Resources */ = {isa = PBXBuildFile; fileRef = 53282FAE1C67C5F100081171 /* Rauto.xcscheme */; };
+		53282FB11C67C5F100081171 /* Rauto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53282FB01C67C5F100081171 /* Rauto.swift */; };
 		53282FB31C67C5F100081171 /* NSObject_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53282FB21C67C5F100081171 /* NSObject_Extension.swift */; };
 		535393C71C6B8770003585F1 /* PluginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535393C61C6B8770003585F1 /* PluginHelper.swift */; };
 		535393C91C6B87EC003585F1 /* String_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535393C81C6B87EC003585F1 /* String_Extension.swift */; };
@@ -18,9 +18,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		53282FAA1C67C5F100081171 /* AutoResource.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AutoResource.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
-		53282FAE1C67C5F100081171 /* AutoResource.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = AutoResource.xcscheme; path = AutoResource.xcodeproj/xcshareddata/xcschemes/AutoResource.xcscheme; sourceTree = SOURCE_ROOT; };
-		53282FB01C67C5F100081171 /* AutoResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoResource.swift; sourceTree = "<group>"; };
+		53282FAA1C67C5F100081171 /* Rauto.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Rauto.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		53282FAE1C67C5F100081171 /* Rauto.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = file; name = Rauto.xcscheme; path = Rauto.xcodeproj/xcshareddata/xcschemes/Rauto.xcscheme; sourceTree = SOURCE_ROOT; };
+		53282FB01C67C5F100081171 /* Rauto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rauto.swift; sourceTree = "<group>"; };
 		53282FB21C67C5F100081171 /* NSObject_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSObject_Extension.swift; sourceTree = "<group>"; };
 		53282FB41C67C5F100081171 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		535393C61C6B8770003585F1 /* PluginHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluginHelper.swift; sourceTree = "<group>"; };
@@ -34,7 +34,7 @@
 		53282FA21C67C5F100081171 = {
 			isa = PBXGroup;
 			children = (
-				53282FAC1C67C5F100081171 /* AutoResource */,
+				53282FAC1C67C5F100081171 /* Rauto */,
 				53282FAB1C67C5F100081171 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -42,31 +42,31 @@
 		53282FAB1C67C5F100081171 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				53282FAA1C67C5F100081171 /* AutoResource.xcplugin */,
+				53282FAA1C67C5F100081171 /* Rauto.xcplugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		53282FAC1C67C5F100081171 /* AutoResource */ = {
+		53282FAC1C67C5F100081171 /* Rauto */ = {
 			isa = PBXGroup;
 			children = (
 				53282FB21C67C5F100081171 /* NSObject_Extension.swift */,
 				535393C81C6B87EC003585F1 /* String_Extension.swift */,
 				537E26211C82324600273CD1 /* NSTabView_extension.swift */,
-				53282FB01C67C5F100081171 /* AutoResource.swift */,
+				53282FB01C67C5F100081171 /* Rauto.swift */,
 				535393C61C6B8770003585F1 /* PluginHelper.swift */,
 				535393D01C6CCA87003585F1 /* ResourceGenerator.swift */,
 				53282FB41C67C5F100081171 /* Info.plist */,
 				535393CE1C6BE194003585F1 /* R_template.txt */,
 				53282FAD1C67C5F100081171 /* Supporting Files */,
 			);
-			path = AutoResource;
+			path = Rauto;
 			sourceTree = "<group>";
 		};
 		53282FAD1C67C5F100081171 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				53282FAE1C67C5F100081171 /* AutoResource.xcscheme */,
+				53282FAE1C67C5F100081171 /* Rauto.xcscheme */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -74,9 +74,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		53282FA91C67C5F100081171 /* AutoResource */ = {
+		53282FA91C67C5F100081171 /* Rauto */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 53282FB71C67C5F100081171 /* Build configuration list for PBXNativeTarget "AutoResource" */;
+			buildConfigurationList = 53282FB71C67C5F100081171 /* Build configuration list for PBXNativeTarget "Rauto" */;
 			buildPhases = (
 				53282FA71C67C5F100081171 /* Sources */,
 				53282FA81C67C5F100081171 /* Resources */,
@@ -85,9 +85,9 @@
 			);
 			dependencies = (
 			);
-			name = AutoResource;
-			productName = AutoResource;
-			productReference = 53282FAA1C67C5F100081171 /* AutoResource.xcplugin */;
+			name = Rauto;
+			productName = Rauto;
+			productReference = 53282FAA1C67C5F100081171 /* Rauto.xcplugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -105,7 +105,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 53282FA61C67C5F100081171 /* Build configuration list for PBXProject "AutoResource" */;
+			buildConfigurationList = 53282FA61C67C5F100081171 /* Build configuration list for PBXProject "Rauto" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -117,7 +117,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				53282FA91C67C5F100081171 /* AutoResource */,
+				53282FA91C67C5F100081171 /* Rauto */,
 			);
 		};
 /* End PBXProject section */
@@ -127,7 +127,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53282FAF1C67C5F100081171 /* AutoResource.xcscheme in Resources */,
+				53282FAF1C67C5F100081171 /* Rauto.xcscheme in Resources */,
 				535393CF1C6BE194003585F1 /* R_template.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,7 +141,7 @@
 			files = (
 				535393C91C6B87EC003585F1 /* String_Extension.swift in Sources */,
 				537E26221C82324600273CD1 /* NSTabView_extension.swift in Sources */,
-				53282FB11C67C5F100081171 /* AutoResource.swift in Sources */,
+				53282FB11C67C5F100081171 /* Rauto.swift in Sources */,
 				53282FB31C67C5F100081171 /* NSObject_Extension.swift in Sources */,
 				535393D11C6CCA87003585F1 /* ResourceGenerator.swift in Sources */,
 				535393C71C6B8770003585F1 /* PluginHelper.swift in Sources */,
@@ -231,12 +231,12 @@
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(HOME)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				INFOPLIST_FILE = AutoResource/Info.plist;
+				INFOPLIST_FILE = Rauto/Info.plist;
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
 				LD_RUNPATH_SEARCH_PATHS = "$(DT_TOOLCHAIN_DIR)/usr/lib/swift/macosx";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = com.azurechen.AutoResource;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.azurechen.Rauto;
+				PRODUCT_NAME = Rauto;
 				WRAPPER_EXTENSION = xcplugin;
 			};
 			name = Debug;
@@ -248,12 +248,12 @@
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(HOME)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				INFOPLIST_FILE = AutoResource/Info.plist;
+				INFOPLIST_FILE = Rauto/Info.plist;
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
 				LD_RUNPATH_SEARCH_PATHS = "$(DT_TOOLCHAIN_DIR)/usr/lib/swift/macosx";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = com.azurechen.AutoResource;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.azurechen.Rauto;
+				PRODUCT_NAME = Rauto;
 				WRAPPER_EXTENSION = xcplugin;
 			};
 			name = Release;
@@ -261,7 +261,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		53282FA61C67C5F100081171 /* Build configuration list for PBXProject "AutoResource" */ = {
+		53282FA61C67C5F100081171 /* Build configuration list for PBXProject "Rauto" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				53282FB51C67C5F100081171 /* Debug */,
@@ -270,7 +270,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		53282FB71C67C5F100081171 /* Build configuration list for PBXNativeTarget "AutoResource" */ = {
+		53282FB71C67C5F100081171 /* Build configuration list for PBXNativeTarget "Rauto" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				53282FB81C67C5F100081171 /* Debug */,
