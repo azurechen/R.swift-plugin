@@ -10,7 +10,9 @@ import AppKit
 
 class PluginHelper {
     
-    static func project() -> (path: String, name: String)? {
+    typealias Project = (path: String, name: String)
+    
+    static func project() -> Project? {
         if let path = workspacePath(), let name = projectName(atPath: path) {
             return (path, name)
         } else {
@@ -38,27 +40,27 @@ class PluginHelper {
         return projectFilePath?.stringByReplacingOccurrencesOfString(".xcodeproj", withString: "")
     }
     
-    static func projectFilePath(inProject project: (path: String, name: String)) -> String {
+    static func projectFilePath(inProject project: Project) -> String {
         return "\(project.path)/\(project.name).xcodeproj/project.pbxproj"
     }
     
-    static func resourceFilePath(inProject project: (path: String, name: String)) -> String {
+    static func resourceFilePath(inProject project: Project) -> String {
         return "\(project.path)/\(project.name)/R.swift"
     }
     
-    static func baseLocalizableFilePath(inProject project: (path: String, name: String)) -> String {
+    static func baseLocalizableFilePath(inProject project: Project) -> String {
         return "\(project.path)/\(project.name)/Base.lproj/Localizable.strings"
     }
     
-    static func colorFilePaths(inProject project: (path: String, name: String)) -> [String] {
+    static func colorFilePaths(inProject project: Project) -> [String] {
         return findFilePaths("Color.strings", inProject: project)
     }
     
-    static func imageDirPaths(inProject project: (path: String, name: String)) -> [String] {
+    static func imageDirPaths(inProject project: Project) -> [String] {
         return findFilePaths(".*?.xcassets", inProject: project)
     }
     
-    private static func findFilePaths(pattern: String, inProject project: (path: String, name: String)) -> [String] {
+    private static func findFilePaths(pattern: String, inProject project: Project) -> [String] {
         let projectFilePath = PluginHelper.projectFilePath(inProject: project)
         
         var paths: [String] = []
