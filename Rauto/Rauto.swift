@@ -11,7 +11,6 @@ var sharedPlugin: Rauto?
 
 class Rauto: NSObject, NSMenuDelegate {
     
-    var states: [String: Bool] = [:] // [workspace: enable]
     let pluginMenu = NSMenu()
 
     var bundle: NSBundle
@@ -34,6 +33,9 @@ class Rauto: NSObject, NSMenuDelegate {
         super.init()
         center.addObserver(self, selector: Selector("createMenu"), name: NSApplicationDidFinishLaunchingNotification, object: nil)
         
+        self.swizzleClass(NSWindow.self,
+            replace: Selector("becomeKeyWindow"),
+            with: Selector("hook_becomeKeyWindow"))
         self.swizzleClass(NSTabView.self,
             replace: Selector("selectTabViewItem:"),
             with: Selector("hook_selectTabViewItem:"))
@@ -70,15 +72,12 @@ class Rauto: NSObject, NSMenuDelegate {
         if (menu == pluginMenu) {
             var enabled = false
             
-            // create a state of current workspace at first time
+            // get state
             if let project = PluginHelper.project() {
                 let key = "\(project.path)/\(project.name)"
-                
-                if (states[key] == nil) {
-                    let rPath = PluginHelper.resourceFilePath(inProject: project)
-                    states[key] = NSFileManager.defaultManager().fileExistsAtPath(rPath)
+                if let state = PluginHelper.states[key] {
+                    enabled = state
                 }
-                enabled = states[key]!
             }
             resetMenuItems(enabled: enabled)
         }
@@ -111,11 +110,11 @@ class Rauto: NSObject, NSMenuDelegate {
         if let project = PluginHelper.project() {
             let key = "\(project.path)/\(project.name)"
             
-            if (states[key] != nil) {
+            if (PluginHelper.states[key] != nil) {
                 if (sender.state == NSOnState) {
-                    states[key] = false
+                    PluginHelper.states[key] = false
                 } else {
-                    states[key] = true
+                    PluginHelper.states[key] = true
                 }
             }
         }
