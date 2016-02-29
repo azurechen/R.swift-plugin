@@ -17,7 +17,7 @@ class Rauto: NSObject, NSMenuDelegate {
     var bundle: NSBundle
     lazy var center = NSNotificationCenter.defaultCenter()
     
-    let REGISTERED_RESOURCE_FILE_PATTERNS = [
+    static let REGISTERED_RESOURCE_FILE_PATTERNS = [
         // 1. PBXBuildFile section
         "\\n*?\\t*?.{24}? /\\* R.swift in Sources \\*/ = \\{isa = PBXBuildFile; fileRef = .*? /\\* R.swift \\*/; \\};",
         // 2. PBXFileReference section
@@ -32,7 +32,7 @@ class Rauto: NSObject, NSMenuDelegate {
         self.bundle = bundle
 
         super.init()
-        center.addObserver(self, selector: Selector("createMenuItems"), name: NSApplicationDidFinishLaunchingNotification, object: nil)
+        center.addObserver(self, selector: Selector("createMenu"), name: NSApplicationDidFinishLaunchingNotification, object: nil)
         
         self.swizzleClass(NSTabView.self,
             replace: Selector("selectTabViewItem:"),
@@ -50,7 +50,7 @@ class Rauto: NSObject, NSMenuDelegate {
         center.removeObserver(self)
     }
     
-    func createMenuItems() {
+    func createMenu() {
         removeObserver()
 
         let item = NSApp.mainMenu!.itemWithTitle("Product")
@@ -80,11 +80,11 @@ class Rauto: NSObject, NSMenuDelegate {
                 }
                 enabled = states[key]!
             }
-            resetMenu(enabled: enabled)
+            resetMenuItems(enabled: enabled)
         }
     }
     
-    func resetMenu(enabled enabled: Bool) {
+    func resetMenuItems(enabled enabled: Bool) {
         pluginMenu.removeAllItems()
         
         // 1. Enable
@@ -122,6 +122,14 @@ class Rauto: NSObject, NSMenuDelegate {
     }
     
     func syncAction() {
+        Rauto.sync()
+    }
+    
+    func cleanAction() {
+        Rauto.clean()
+    }
+    
+    static func sync() {
         if let project = PluginHelper.project() {
             // 1. create and write the R.swift file
             createResourceFile(inProject: project)
@@ -132,7 +140,7 @@ class Rauto: NSObject, NSMenuDelegate {
         }
     }
     
-    func cleanAction() {
+    static func clean() {
         if let project = PluginHelper.project() {
             // 1. remove the R.swift file
             removeResourceFile(inProject: project)
@@ -143,7 +151,7 @@ class Rauto: NSObject, NSMenuDelegate {
         }
     }
     
-    func createResourceFile(inProject project: (path: String, name: String)) {
+    private static func createResourceFile(inProject project: (path: String, name: String)) {
         let rPath = PluginHelper.resourceFilePath(inProject: project)
         
         // if the R.swift file exist, remove it
@@ -161,7 +169,7 @@ class Rauto: NSObject, NSMenuDelegate {
         generator.generate()?.writeToFile(rPath)
     }
     
-    func registerResourceFileIfNeeded(inProject project: (path: String, name: String)) {
+    private static func registerResourceFileIfNeeded(inProject project: (path: String, name: String)) {
         let projectFilePath = PluginHelper.projectFilePath(inProject: project)
         
         // check status first
@@ -219,7 +227,7 @@ class Rauto: NSObject, NSMenuDelegate {
         }
     }
     
-    func removeResourceFile(inProject project: (path: String, name: String)) {
+    private static func removeResourceFile(inProject project: (path: String, name: String)) {
         // remove R file
         let rPath = PluginHelper.resourceFilePath(inProject: project)
         do {
@@ -228,7 +236,7 @@ class Rauto: NSObject, NSMenuDelegate {
         }
     }
     
-    func cleanResourceFile(inProject project: (path: String, name: String)) {
+    private static func cleanResourceFile(inProject project: (path: String, name: String)) {
         let projectFilePath = PluginHelper.projectFilePath(inProject: project)
         
         // remove from project.pbxproj
@@ -248,7 +256,7 @@ class Rauto: NSObject, NSMenuDelegate {
         }
     }
     
-    func checkResourceFile(inProject project: (path: String, name: String)) -> Int {
+    private static func checkResourceFile(inProject project: (path: String, name: String)) -> Int {
         let projectFilePath = PluginHelper.projectFilePath(inProject: project)
         
         // check if R.swift exists in project.pbxproj
