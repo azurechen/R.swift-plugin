@@ -68,38 +68,60 @@ class Rauto: NSObject, NSMenuDelegate {
     
     func menuWillOpen(menu: NSMenu) {
         if (menu == pluginMenu) {
-            pluginMenu.removeAllItems()
+            var enabled = false
             
-            // 1. Enable
-            let enableItem = NSMenuItem(title: "Enable Auto Sync", action: "enableAction:", keyEquivalent: "")
-            enableItem.state = NSOnState
-            enableItem.target = self
-            pluginMenu.addItem(enableItem)
-            
-            // 2. separator
-            pluginMenu.addItem(NSMenuItem.separatorItem())
-            
-            // 3. sync
-            let syncItem = NSMenuItem(title: "Sync", action: "syncAction:", keyEquivalent: "")
-            syncItem.target = self
-            pluginMenu.addItem(syncItem)
-            
-            // 4. clean
-            let cleanItem = NSMenuItem(title: "Clean", action: "cleanAction:", keyEquivalent: "")
-            cleanItem.target = self
-            pluginMenu.addItem(cleanItem)
-        }
-    }
-
-    func enableAction(sender: NSMenuItem) {
-        if (sender.state == NSOnState) {
-            sender.state = NSOffState
-        } else {
-            sender.state = NSOnState
+            // create a state of current workspace at first time
+            if let project = PluginHelper.project() {
+                let key = "\(project.path)/\(project.name)"
+                
+                if (states[key] == nil) {
+                    let rPath = PluginHelper.resourceFilePath(inProject: project)
+                    states[key] = NSFileManager.defaultManager().fileExistsAtPath(rPath)
+                }
+                enabled = states[key]!
+            }
+            resetMenu(enabled: enabled)
         }
     }
     
-    func syncAction(sender: NSMenuItem) {
+    func resetMenu(enabled enabled: Bool) {
+        pluginMenu.removeAllItems()
+        
+        // 1. Enable
+        let enableItem = NSMenuItem(title: "Enable Auto Sync", action: "enableAction:", keyEquivalent: "")
+        enableItem.state = enabled ? NSOnState : NSOffState
+        enableItem.target = self
+        pluginMenu.addItem(enableItem)
+        
+        // 2. separator
+        pluginMenu.addItem(NSMenuItem.separatorItem())
+        
+        // 3. sync
+        let syncItem = NSMenuItem(title: "Sync", action: "syncAction", keyEquivalent: "")
+        syncItem.target = self
+        pluginMenu.addItem(syncItem)
+        
+        // 4. clean
+        let cleanItem = NSMenuItem(title: "Clean", action: "cleanAction", keyEquivalent: "")
+        cleanItem.target = self
+        pluginMenu.addItem(cleanItem)
+    }
+
+    func enableAction(sender: NSMenuItem) {
+        if let project = PluginHelper.project() {
+            let key = "\(project.path)/\(project.name)"
+            
+            if (states[key] != nil) {
+                if (sender.state == NSOnState) {
+                    states[key] = false
+                } else {
+                    states[key] = true
+                }
+            }
+        }
+    }
+    
+    func syncAction() {
         if let project = PluginHelper.project() {
             // 1. create and write the R.swift file
             createResourceFile(inProject: project)
@@ -110,7 +132,7 @@ class Rauto: NSObject, NSMenuDelegate {
         }
     }
     
-    func cleanAction(sender: NSMenuItem) {
+    func cleanAction() {
         if let project = PluginHelper.project() {
             // 1. remove the R.swift file
             removeResourceFile(inProject: project)
