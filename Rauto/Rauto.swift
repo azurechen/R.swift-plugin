@@ -11,10 +11,11 @@ var sharedPlugin: Rauto?
 
 class Rauto: NSObject, NSMenuDelegate {
     
-    let pluginMenu = NSMenu()
-
     var bundle: NSBundle
     lazy var center = NSNotificationCenter.defaultCenter()
+    
+    let pluginMenu = NSMenu()
+    static var states: [String: Bool] = [:] // [workspace: enable]
     
     static let REGISTERED_RESOURCE_FILE_PATTERNS = [
         // 1. PBXBuildFile section
@@ -75,7 +76,7 @@ class Rauto: NSObject, NSMenuDelegate {
             // get state
             if let project = PluginHelper.project() {
                 let key = "\(project.path)/\(project.name)"
-                if let state = PluginHelper.states[key] {
+                if let state = Rauto.states[key] {
                     enabled = state
                 }
             }
@@ -110,11 +111,11 @@ class Rauto: NSObject, NSMenuDelegate {
         if let project = PluginHelper.project() {
             let key = "\(project.path)/\(project.name)"
             
-            if (PluginHelper.states[key] != nil) {
+            if (Rauto.states[key] != nil) {
                 if (sender.state == NSOnState) {
-                    PluginHelper.states[key] = false
+                    Rauto.states[key] = false
                 } else {
-                    PluginHelper.states[key] = true
+                    Rauto.states[key] = true
                 }
             }
         }
@@ -164,7 +165,7 @@ class Rauto: NSObject, NSMenuDelegate {
         }
         
         // generate contents of the R.swift
-        let generator = ResourceGenerator(project: project)
+        let generator = RContentGenerator(project: project)
         generator.generate()?.writeToFile(rPath)
     }
     

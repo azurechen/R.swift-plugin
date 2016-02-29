@@ -12,8 +12,6 @@ class PluginHelper {
     
     typealias Project = (path: String, name: String)
     
-    static var states: [String: Bool] = [:] // [workspace: enable]
-    
     static func project() -> Project? {
         if let path = workspacePath(), let name = projectName(atPath: path) {
             return (path, name)

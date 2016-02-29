@@ -17,11 +17,14 @@ extension NSWindow {
         if let project = PluginHelper.project() {
             let key = "\(project.path)/\(project.name)"
             
-            if (PluginHelper.states[key] == nil) {
+            if (Rauto.states[key] == nil) {
                 let rPath = PluginHelper.resourceFilePath(inProject: project)
-                PluginHelper.states[key] = NSFileManager.defaultManager().fileExistsAtPath(rPath)
+                Rauto.states[key] = NSFileManager.defaultManager().fileExistsAtPath(rPath)
             }
         }
+        
+        // sync
+        Rauto.sync()
     }
 }
 
@@ -29,7 +32,8 @@ extension NSTabView {
     // change tab
     func hook_selectTabViewItem(tabViewItem: NSTabViewItem?) {
         self.hook_selectTabViewItem(tabViewItem)
-        NSLog("swizzle tab  \(tabViewItem!.label)")
+        // sync
+        Rauto.sync()
     }
 }
 
@@ -37,6 +41,7 @@ extension NSTabViewItem {
     // change file
     func hook_setLabel(label: String) {
         self.hook_setLabel(label)
-        NSLog("swizzle file \(self.label)")
+        // sync
+        Rauto.sync()
     }
 }

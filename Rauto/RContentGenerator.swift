@@ -8,7 +8,7 @@
 
 import AppKit
 
-class ResourceGenerator {
+class RContentGenerator {
     
     let PATTERN_STRINGS = "\"(.*?)\"[\\n\\s]*?=[\\n\\s]*?\"(.*?)\"[\\n\\s]*?;"
     
@@ -38,7 +38,7 @@ class ResourceGenerator {
     private func initFromTemplate() {
         let url = NSBundle(forClass: self.dynamicType).URLForResource("R_template", withExtension: "txt")
         content = try? String(contentsOfURL: url!, encoding: NSUTF8StringEncoding)
-//        content? += "\n\n//  \(NSDate())" // for debug
+        content? += "\n\n//  \(NSDate())" // for debug
     }
     
     private func generateColors() {

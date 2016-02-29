@@ -13,7 +13,7 @@
 		535393C71C6B8770003585F1 /* PluginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535393C61C6B8770003585F1 /* PluginHelper.swift */; };
 		535393C91C6B87EC003585F1 /* String_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535393C81C6B87EC003585F1 /* String_Extension.swift */; };
 		535393CF1C6BE194003585F1 /* R_template.txt in Resources */ = {isa = PBXBuildFile; fileRef = 535393CE1C6BE194003585F1 /* R_template.txt */; };
-		535393D11C6CCA87003585F1 /* ResourceGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535393D01C6CCA87003585F1 /* ResourceGenerator.swift */; };
+		535393D11C6CCA87003585F1 /* RContentGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535393D01C6CCA87003585F1 /* RContentGenerator.swift */; };
 		537E26221C82324600273CD1 /* SwizzledMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537E26211C82324600273CD1 /* SwizzledMethods.swift */; };
 /* End PBXBuildFile section */
 
@@ -26,7 +26,7 @@
 		535393C61C6B8770003585F1 /* PluginHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluginHelper.swift; sourceTree = "<group>"; };
 		535393C81C6B87EC003585F1 /* String_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String_Extension.swift; sourceTree = "<group>"; };
 		535393CE1C6BE194003585F1 /* R_template.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = R_template.txt; sourceTree = "<group>"; };
-		535393D01C6CCA87003585F1 /* ResourceGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceGenerator.swift; sourceTree = "<group>"; };
+		535393D01C6CCA87003585F1 /* RContentGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RContentGenerator.swift; sourceTree = "<group>"; };
 		537E26211C82324600273CD1 /* SwizzledMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwizzledMethods.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -52,10 +52,10 @@
 			children = (
 				53282FB21C67C5F100081171 /* NSObject_Extension.swift */,
 				535393C81C6B87EC003585F1 /* String_Extension.swift */,
-				537E26211C82324600273CD1 /* SwizzledMethods.swift */,
 				53282FB01C67C5F100081171 /* Rauto.swift */,
+				537E26211C82324600273CD1 /* SwizzledMethods.swift */,
 				535393C61C6B8770003585F1 /* PluginHelper.swift */,
-				535393D01C6CCA87003585F1 /* ResourceGenerator.swift */,
+				535393D01C6CCA87003585F1 /* RContentGenerator.swift */,
 				53282FB41C67C5F100081171 /* Info.plist */,
 				535393CE1C6BE194003585F1 /* R_template.txt */,
 				53282FAD1C67C5F100081171 /* Supporting Files */,
@@ -143,7 +143,7 @@
 				537E26221C82324600273CD1 /* SwizzledMethods.swift in Sources */,
 				53282FB11C67C5F100081171 /* Rauto.swift in Sources */,
 				53282FB31C67C5F100081171 /* NSObject_Extension.swift in Sources */,
-				535393D11C6CCA87003585F1 /* ResourceGenerator.swift in Sources */,
+				535393D11C6CCA87003585F1 /* RContentGenerator.swift in Sources */,
 				535393C71C6B8770003585F1 /* PluginHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
