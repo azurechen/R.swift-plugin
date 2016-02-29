@@ -129,6 +129,15 @@ class Rauto: NSObject, NSMenuDelegate {
         Rauto.clean()
     }
     
+    static func autoSyncIfNeeded() {
+        if let project = PluginHelper.project() {
+            let key = "\(project.path)/\(project.name)"
+            if (Rauto.states[key] == true) {
+                sync()
+            }
+        }
+    }
+    
     static func sync() {
         if let project = PluginHelper.project() {
             // 1. create and write the R.swift file

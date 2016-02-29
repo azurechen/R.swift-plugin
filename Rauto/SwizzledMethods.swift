@@ -24,7 +24,7 @@ extension NSWindow {
         }
         
         // sync
-        Rauto.sync()
+        Rauto.autoSyncIfNeeded()
     }
 }
 
@@ -33,7 +33,7 @@ extension NSTabView {
     func hook_selectTabViewItem(tabViewItem: NSTabViewItem?) {
         self.hook_selectTabViewItem(tabViewItem)
         // sync
-        Rauto.sync()
+        Rauto.autoSyncIfNeeded()
     }
 }
 
@@ -42,6 +42,6 @@ extension NSTabViewItem {
     func hook_setLabel(label: String) {
         self.hook_setLabel(label)
         // sync
-        Rauto.sync()
+        Rauto.autoSyncIfNeeded()
     }
 }
