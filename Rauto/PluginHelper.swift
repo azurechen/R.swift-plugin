@@ -12,6 +12,10 @@ class PluginHelper {
     
     typealias Project = (path: String, name: String)
     
+    static let TARGET_NAME_PATTERN_LOCALIZABLE = "Localizable.strings"
+    static let TARGET_NAME_PATTERN_COLOR = "Color.strings"
+    static let TARGET_NAME_PATTERN_IMAGE = ".*?.xcassets"
+    
     static func project() -> Project? {
         if let path = workspacePath(), let name = projectName(atPath: path) {
             return (path, name)
@@ -49,15 +53,15 @@ class PluginHelper {
     }
     
     static func baseLocalizableFilePath(inProject project: Project) -> String {
-        return "\(project.path)/\(project.name)/Base.lproj/Localizable.strings"
+        return "\(project.path)/\(project.name)/Base.lproj/\(TARGET_NAME_PATTERN_LOCALIZABLE)"
     }
     
     static func colorFilePaths(inProject project: Project) -> [String] {
-        return findFilePaths("Color.strings", inProject: project)
+        return findFilePaths(TARGET_NAME_PATTERN_COLOR, inProject: project)
     }
     
     static func imageDirPaths(inProject project: Project) -> [String] {
-        return findFilePaths(".*?.xcassets", inProject: project)
+        return findFilePaths(TARGET_NAME_PATTERN_IMAGE, inProject: project)
     }
     
     private static func findFilePaths(pattern: String, inProject project: Project) -> [String] {
