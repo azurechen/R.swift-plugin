@@ -207,6 +207,9 @@ class Rauto: NSObject, NSMenuDelegate {
         // generate contents of the R.swift
         let generator = RContentGenerator(project: project)
         generator.generate()?.writeToFile(rPath)
+        
+        // lock R.swift
+        PluginHelper.runShellCommand("chmod 444 \(rPath)")
     }
     
     private static func registerResourceFileIfNeeded(inProject project: (path: String, name: String)) {
