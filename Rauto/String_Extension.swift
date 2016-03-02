@@ -29,6 +29,11 @@ extension String {
         }
     }
     
+    func match(pattern: String) -> Bool {
+        let range = self.rangeOfString(pattern, options: .RegularExpressionSearch)
+        return range?.startIndex == self.startIndex && range?.endIndex == self.endIndex
+    }
+    
     func matches(pattern: String) -> [NSTextCheckingResult]? {
         do {
             let regex = try NSRegularExpression(pattern: pattern, options: .CaseInsensitive)
