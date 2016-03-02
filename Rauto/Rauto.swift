@@ -15,6 +15,8 @@ class Rauto: NSObject, NSMenuDelegate {
     lazy var center = NSNotificationCenter.defaultCenter()
     
     let pluginMenu = NSMenu()
+    
+    static var currentDocumentName: String?
     static var states: [String: Bool] = [:] // [workspace: enable]
     
     static let REGISTERED_RESOURCE_FILE_PATTERNS = [
@@ -116,6 +118,7 @@ class Rauto: NSObject, NSMenuDelegate {
                     Rauto.states[key] = false
                 } else {
                     Rauto.states[key] = true
+                    Rauto.sync()
                 }
             }
         }
@@ -129,16 +132,43 @@ class Rauto: NSObject, NSMenuDelegate {
         Rauto.clean()
     }
     
-    static func autoSyncIfNeeded() {
-        if let project = PluginHelper.project() {
-            let key = "\(project.path)/\(project.name)"
-            if (Rauto.states[key] == true) {
-                sync()
+    static func autoSyncIfNeeded(document documentName: String?) {
+        let prevDocumentName = currentDocumentName
+        currentDocumentName = documentName
+        //print("\(prevDocumentName) \(currentDocumentName)")
+        
+        if (currentDocumentName == nil) ||  isRFile(prevDocumentName) ||
+            (!isRFile(currentDocumentName) &&
+            prevDocumentName != currentDocumentName &&
+            isTargetFile(prevDocumentName) &&
+            !isTargetFile(currentDocumentName)) {
+            
+            if let project = PluginHelper.project() {
+                let key = "\(project.path)/\(project.name)"
+                // Auto sync is enabled
+                if (states[key] == true) {
+                    sync()
+                }
             }
         }
     }
     
+    private static func isRFile(name: String?) -> Bool {
+        if (name != nil) {
+            return name!.match(PluginHelper.TARGET_NAME_PATTERN_R)
+        }
+        return false
+    }
+    
+    private static func isTargetFile(name: String?) -> Bool {
+        if (name != nil) {
+            return name!.match(PluginHelper.TARGET_NAME_PATTERN_COLOR) || name!.match(PluginHelper.TARGET_NAME_PATTERN_IMAGE) || name!.match(PluginHelper.TARGET_NAME_PATTERN_LOCALIZABLE)
+        }
+        return false
+    }
+    
     static func sync() {
+        print("Rauto Sync")
         if let project = PluginHelper.project() {
             // 1. create and write the R.swift file
             createResourceFile(inProject: project)
@@ -150,6 +180,7 @@ class Rauto: NSObject, NSMenuDelegate {
     }
     
     static func clean() {
+        print("Rauto clean")
         if let project = PluginHelper.project() {
             // 1. remove the R.swift file
             removeResourceFile(inProject: project)

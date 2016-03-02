@@ -13,18 +13,20 @@ extension NSWindow {
     func hook_becomeKeyWindow() {
         self.hook_becomeKeyWindow()
         
-        // create a state of current workspace at first time
-        if let project = PluginHelper.project() {
-            let key = "\(project.path)/\(project.name)"
-            
-            if (Rauto.states[key] == nil) {
-                let rPath = PluginHelper.resourceFilePath(inProject: project)
-                Rauto.states[key] = NSFileManager.defaultManager().fileExistsAtPath(rPath)
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            // create a state of current workspace at first time
+            if let project = PluginHelper.project() {
+                let key = "\(project.path)/\(project.name)"
+                
+                if (Rauto.states[key] == nil) {
+                    let rPath = PluginHelper.resourceFilePath(inProject: project)
+                    Rauto.states[key] = NSFileManager.defaultManager().fileExistsAtPath(rPath)
+                }
             }
+            
+            // sync
+            Rauto.autoSyncIfNeeded(document: nil)
         }
-        
-        // sync
-        Rauto.autoSyncIfNeeded()
     }
 }
 
@@ -32,8 +34,9 @@ extension NSTabView {
     // change tab
     func hook_selectTabViewItem(tabViewItem: NSTabViewItem?) {
         self.hook_selectTabViewItem(tabViewItem)
+        
         // sync
-        Rauto.autoSyncIfNeeded()
+        Rauto.autoSyncIfNeeded(document: tabViewItem?.label)
     }
 }
 
@@ -41,7 +44,8 @@ extension NSTabViewItem {
     // change file
     func hook_setLabel(label: String) {
         self.hook_setLabel(label)
+        
         // sync
-        Rauto.autoSyncIfNeeded()
+        Rauto.autoSyncIfNeeded(document: self.label)
     }
 }
