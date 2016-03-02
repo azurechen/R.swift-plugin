@@ -12,6 +12,7 @@ class PluginHelper {
     
     typealias Project = (path: String, name: String)
     
+    static let TARGET_NAME_PATTERN_R = "R.swift"
     static let TARGET_NAME_PATTERN_LOCALIZABLE = "Localizable.strings"
     static let TARGET_NAME_PATTERN_COLOR = "Color.strings"
     static let TARGET_NAME_PATTERN_IMAGE = ".*?.xcassets"
@@ -49,7 +50,7 @@ class PluginHelper {
     }
     
     static func resourceFilePath(inProject project: Project) -> String {
-        return "\(project.path)/\(project.name)/R.swift"
+        return "\(project.path)/\(project.name)/\(TARGET_NAME_PATTERN_R)"
     }
     
     static func baseLocalizableFilePath(inProject project: Project) -> String {
