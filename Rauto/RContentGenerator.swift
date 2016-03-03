@@ -38,7 +38,7 @@ class RContentGenerator {
     private func initFromTemplate() {
         let url = NSBundle(forClass: self.dynamicType).URLForResource("R_template", withExtension: "txt")
         content = try? String(contentsOfURL: url!, encoding: NSUTF8StringEncoding)
-        //content? += "\n\n//  \(NSDate())" // for debug
+        content? += "\n\n//  \(NSDate())" // for debug
     }
     
     private func generateColors() {
@@ -49,7 +49,8 @@ class RContentGenerator {
         for colorFilePath in colorFilePaths {
             // read the Color.strings file
             if let originalContent = String.readFile(colorFilePath) {
-                if let matches = originalContent.matches(PATTERN_STRINGS) {
+                let matches = originalContent.matches(PATTERN_STRINGS)
+                if !matches.isEmpty {
                     for match in matches {
                         let key = (originalContent as NSString).substringWithRange(match.rangeAtIndex(1)) as String
                         let value = (originalContent as NSString).substringWithRange(match.rangeAtIndex(2)) as String
@@ -86,8 +87,8 @@ class RContentGenerator {
         let baseStringFilePath = PluginHelper.baseLocalizableFilePath(inProject: project)
         // read the Localizable.strings file
         if let originalContent = String.readFile(baseStringFilePath) {
-            if let matches = originalContent.matches(PATTERN_STRINGS) {
-                
+            let matches = originalContent.matches(PATTERN_STRINGS)
+            if !matches.isEmpty {
                 // generate enum members
                 var generatedContent = ""
                 for match in matches {
@@ -101,7 +102,7 @@ class RContentGenerator {
     }
     
     private func replaceEnumMembers(identifier: String, members: String) {
-        let range = content!.matches("enum \(identifier) \\{\\n([\\s\\S]*?)\\s{4}\\}")![0].rangeAtIndex(1)
+        let range = content!.matches("enum \(identifier) \\{\\n([\\s\\S]*?)\\s{4}\\}")[0].rangeAtIndex(1)
         content = (content! as NSString).stringByReplacingCharactersInRange(range, withString: members)
     }
     
