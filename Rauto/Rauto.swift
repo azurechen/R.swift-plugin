@@ -170,22 +170,22 @@ class Rauto: NSObject, NSMenuDelegate {
     static func sync() {
         print("Rauto Sync")
         if let project = PluginHelper.project() {
-            // 1. create and write the R.swift file
-            createResourceFile(inProject: project)
-            // 2. register the R.swift file in project.pbxproj
+            // 1. register the R.swift file in project.pbxproj
             registerResourceFileIfNeeded(inProject: project)
+            // 2. create and write the R.swift file
+            createResourceFile(inProject: project)
         } else {
             print("Cannot find the root path of the current project.")
         }
     }
     
     static func clean() {
-        print("Rauto clean")
+        print("Rauto Clean")
         if let project = PluginHelper.project() {
             // 1. remove the R.swift file
             removeResourceFile(inProject: project)
             // 2. clean registered the R.swift file in project.pbxproj
-            cleanResourceFile(inProject: project)
+            unregisterResourceFile(inProject: project)
         } else {
             print("Cannot find the root path of the current project.")
         }
@@ -212,15 +212,20 @@ class Rauto: NSObject, NSMenuDelegate {
         PluginHelper.runShellCommand("chmod 444 \(rPath)")
     }
     
+    private static func removeResourceFile(inProject project: (path: String, name: String)) {
+        // remove R files
+        PluginHelper.runShellCommand("find \(project.path)/\(project.name) -name \(PluginHelper.TARGET_NAME_PATTERN_R) -type f -delete")
+    }
+    
     private static func registerResourceFileIfNeeded(inProject project: (path: String, name: String)) {
         let projectFilePath = PluginHelper.projectFilePath(inProject: project)
         
         // check status first
         let status = checkResourceFile(inProject: project)
-        if (status == 4) { // the R.swift file is registered
+        if (status == 1) { // the R.swift file is registered
             return
         } else if (status != 0) { // some parts of info have been registered, but not completed
-            cleanResourceFile(inProject: project)
+            unregisterResourceFile(inProject: project)
         }
         
         // read the content of project.pbxproj and register R file in project.pbxproj
@@ -270,16 +275,7 @@ class Rauto: NSObject, NSMenuDelegate {
         }
     }
     
-    private static func removeResourceFile(inProject project: (path: String, name: String)) {
-        // remove R file
-        let rPath = PluginHelper.resourceFilePath(inProject: project)
-        do {
-            try NSFileManager.defaultManager().removeItemAtPath(rPath)
-        } catch {
-        }
-    }
-    
-    private static func cleanResourceFile(inProject project: (path: String, name: String)) {
+    private static func unregisterResourceFile(inProject project: (path: String, name: String)) {
         let projectFilePath = PluginHelper.projectFilePath(inProject: project)
         
         // remove from project.pbxproj
@@ -304,13 +300,20 @@ class Rauto: NSObject, NSMenuDelegate {
         
         // check if R.swift exists in project.pbxproj
         if let projectContent = String.readFile(projectFilePath) {
-            var count = 0
+            var count1 = 0
+            var count2 = 0
             for pattern in REGISTERED_RESOURCE_FILE_PATTERNS {
-                if let _ = projectContent.rangeOfString(pattern, options: .RegularExpressionSearch) {
-                    count++
-                }
+                count1 += projectContent.matches(pattern).count
+                count2++
             }
-            return count
+            
+            if (count1 == 0 && count2 == 0) { // registered file not found
+                return 0
+            } else if (count1 == 4 && count2 == 4) { // registered file found
+                return 1
+            } else { // error
+                return -1
+            }
         } else {
             print("Cannot read the project.pbxproj file.")
             return -1
