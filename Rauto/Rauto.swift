@@ -130,6 +130,15 @@ class Rauto: NSObject, NSMenuDelegate {
     
     func cleanAction() {
         Rauto.clean()
+        
+        // Set auto sync disable to avoid sync again after cleaning R
+        if let project = PluginHelper.project() {
+            let key = "\(project.path)/\(project.name)"
+            
+            if (Rauto.states[key] != nil) {
+                Rauto.states[key] = false
+            }
+        }
     }
     
     static func autoSyncIfNeeded(document documentName: String?) {
