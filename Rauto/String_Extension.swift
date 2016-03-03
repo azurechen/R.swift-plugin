@@ -13,6 +13,15 @@ extension String {
         self = self.substringToIndex(index) + string + self.substringFromIndex(index)
     }
     
+    func rangeFromNSRange(nsRange: NSRange) -> Range<String.Index>? {
+        if let range = nsRange.toRange() {
+            let startIndex = self.startIndex.advancedBy(range.startIndex)
+            let endIndex = startIndex.advancedBy(range.endIndex - range.startIndex)
+            return Range<String.Index>(start: startIndex, end: endIndex)
+        }
+        return nil
+    }
+    
     static func readFile(path: String) -> String? {
         do {
             let content = try NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding)

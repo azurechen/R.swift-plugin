@@ -252,25 +252,11 @@ class Rauto: NSObject, NSMenuDelegate {
                 projectContent.insert("\n\t\t\(UUID2) /* R.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.swift; sourceTree = \"<group>\"; };", atIndex: range.endIndex)
             }
             // 3. PBXGroup section (Supporting Files)
-            do {
-                let regex = try NSRegularExpression(pattern: "/\\*.*?\\*/ = \\{\\n*?\\t*?isa = PBXGroup;[\\s\\S]*?\\t*(.{24}?) /\\* Supporting Files \\*/", options: .CaseInsensitive)
-                let matches = regex.matchesInString(projectContent, options: [], range: NSMakeRange(0, projectContent.characters.count))
-                if (!matches.isEmpty) {
-                    let mainFolderId = (projectContent as NSString).substringWithRange(matches[0].rangeAtIndex(1)) as String
-                
-                    if (mainFolderId.characters.count == 24) {
-                        if let range = projectContent.rangeOfString("\(mainFolderId) /\\* Supporting Files \\*/ = \\{\\n*?\\t*?isa = PBXGroup;\\n*?\\t*?children = \\(", options: .RegularExpressionSearch) {
-                            projectContent.insert("\n\t\t\t\t\(UUID2) /* R.swift */,", atIndex: range.endIndex)
-                        }
-                    } else {
-                        print("Cannot find the Supporting Files group.")
-                        return
-                    }
-                } else {
-                    print("Cannot find the Supporting Files group.")
-                    return
+            let matches = projectContent.matches("/\\* \(project.name) \\*/ = \\{\\n*?\\t*?isa = PBXGroup;\\n*?\\t*?children = \\(([\\s\\S]*?)\\n*?\\t*?\\);")
+            if (!matches.isEmpty) {
+                if let range = projectContent.rangeFromNSRange(matches[0].rangeAtIndex(1)) {
+                    projectContent.insert("\n\t\t\t\t\(UUID2) /* R.swift */,", atIndex: range.endIndex)
                 }
-            } catch {
             }
             // 4. PBXSourcesBuildPhase section
             if let range = projectContent.rangeOfString("/\\* Begin PBXSourcesBuildPhase section \\*/\\n*?\\t*?[\\s\\S]*?files = \\(", options: .RegularExpressionSearch) {
