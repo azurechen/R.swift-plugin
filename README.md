@@ -10,19 +10,19 @@ Usage
 
 ###Strings
 
-Get strings by calling `getString(R.string.{string_name})`
+Get strings by calling `string(R.string.{string_name})`
 
 ```swift
-let str: String = getString(R.string.hello_world)
+let str: String = string(R.string.hello_world)
 ```
 
 Or use the abbreviated form
 
 ```swift
-let str: String = getString(.hello_world)
+let str: String = string(.hello_world)
 ```
 
-If you have some localizable string files, the `getString(R.string.{string_name})` will show the text in your language.
+If you have some localizable string files, the `string(R.string.{string_name})` will show the text in your language.
 
 * `Base.lproj/Localizable.strings`
 
@@ -54,16 +54,16 @@ Assume there is any `*.xcassets` folder in your project
 
 <img src="./screenshots/pic_assets.png" width = "640" alt="Image.xcassets" />
 
-Get images by calling `getImage(R.string.{image_name})`
+Get images by calling `image(R.string.{image_name})`
 
 ```swift
-imageView.image = getImage(R.image.icon_play)
+imageView.image = image(R.image.icon_play)
 ```
 
 or
 
 ```swift
-imageView.image = getImage(.icon_play)
+imageView.image = image(.icon_play)
 ```
 
 ###Colors
@@ -80,16 +80,33 @@ Create a `Color.strings` file first and define some colors you like. The hex cod
 "cat_eye"        = "#EBE5";
 ```
 
-And get colors by calling `getColor(R.color.{color_name})`
+And get colors by calling `color(R.color.{color_name})`
 
 ```swift
-view.backgroundColor = getColor(R.color.popcorn_yellow)
+view.backgroundColor = color(R.color.popcorn_yellow)
 ```
 
 or
 
 ```swift
-view.backgroundColor = getColor(.popcorn_yellow)
+view.backgroundColor = color(.popcorn_yellow)
+```
+
+... 
+
+####Java-like Syntax
+
+`Rauto` supports the `Java-like syntax` if you used to code `Java`. But still suggest using a `Swift syntax`.
+
+```swift
+getString(R.string.hello_world)
+getString(.hello_world)
+
+getImage(R.image.icon_play)
+getImage(.icon_play)
+
+getColor(R.color.popcorn_yellow)
+getColor(.popcorn_yellow)
 ```
 
 How to Install

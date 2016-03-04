@@ -8,14 +8,14 @@
 import UIKit
 
 class R {
-    
+
     enum color: String {
         case __ = ""
     }
-    
+
     enum image {
     }
-    
+
     enum string {
     }
     
@@ -23,7 +23,7 @@ class R {
 
 extension NSObject {
 
-    func getColor(r: R.color) -> UIColor {
+    func color(r: R.color) -> UIColor {
         let argb = r.rawValue
         
         var alpha: CGFloat = 1.0
@@ -66,12 +66,24 @@ extension NSObject {
         }
         return UIColor(red: red, green: green, blue: blue, alpha: alpha)
     }
-    
-    func getImage(r: R.image) -> UIImage? {
+
+    func image(r: R.image) -> UIImage? {
         return UIImage(named: String(r))
     }
-    
-    func getString(r: R.string) -> String {
+
+    func string(r: R.string) -> String {
         return NSLocalizedString(String(r), tableName: nil, bundle: NSBundle.mainBundle(), value: "", comment: "")
+    }
+
+    func getColor(r: R.color) -> UIColor {
+        return color(r)
+    }
+
+    func getImage(r: R.image) -> UIImage? {
+        return image(r)
+    }
+
+    func getString(r: R.string) -> String {
+        return string(r)
     }
 }
