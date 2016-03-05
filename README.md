@@ -1,9 +1,9 @@
 Rauto Plugin for Xcode
 ======================
 
-This Xcode Plugin make you access resources like `colors`, `images` or `localizable strings` easier and more accurately. It provides functions like `Android Resource Manager` in Swift.
+This Xcode Plugin can generate a resource file like `R.java` of `Android` automatically in `Swift`.
 
-It generates references for colors, images and localizable strings <del>automatically</del>. (It will be supported in the next version)
+It make you access resources like `colors`, `images` or `localizable strings` easier and more accurately.
 
 Usage
 -----
@@ -112,19 +112,24 @@ getColor(.popcorn_yellow)
 How to Install
 --------------
 
-<del>Install it via <a href="http://alcatraz.io/">Alcatraz</a></del> (Not yet)<br />
+Install it via <a href="http://alcatraz.io/">Alcatraz</a> and search `Rauto`
+
 or
 
 1. `Clone` this repository and `build` it.
-2. `Restart` Xcode
+2. `Restart` Xcode.
 
 or
 
-1. Download and unzip a <a href="https://github.com/azurechen/Rauto/releases">release</a> to `~/Library/Application Support/Developer/Shared/Xcode/Plug-ins`
-2. `Restart` Xcode
+1. Download and unzip a <a href="https://github.com/azurechen/Rauto/releases">release</a> to `~/Library/Application Support/Developer/Shared/Xcode/Plug-ins`.
+2. `Restart` Xcode.
 
 After restarting Xcode, open any project and 
 
-1. Click `Product` -> `Rauto` -> `Sync`
-2. If you don't use Rauto in this project anymore, click `Product` -> `Rauto` -> `Clean` 
+1. The first time use
+   * Click `Product` -> `Rauto` -> `Enable Auto Sync`
+2. If you want to manually sync
+   * Click `Product` -> `Rauto` -> `Sync`
+3. If you don't use Rauto in this project anymore
+   * Click `Product` -> `Rauto` -> `Clean` 
 
