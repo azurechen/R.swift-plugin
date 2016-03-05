@@ -1,9 +1,11 @@
 Rauto Plugin for Xcode
 ======================
 
-This Xcode Plugin can generate a resource file like `R.java` of `Android` automatically in `Swift`.
+This Xcode Plugin can generate a resource file like the `R.java` of `Android` automatically in `Swift`.
 
-It make you access resources like `colors`, `images` or `localizable strings` easier and more accurately.
+It make you access resources like `colors`, `images` or `localizable strings` easier and more accurately with syntax highlighting.
+
+<img src="./screenshots/sample.png" width = "465" alt="Image.xcassets" />
 
 Usage
 -----
