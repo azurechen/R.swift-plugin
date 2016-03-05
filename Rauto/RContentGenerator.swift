@@ -50,7 +50,7 @@ class RContentGenerator {
             // read the Color.strings file
             if let originalContent = String.readFile(colorFilePath) {
                 let matches = originalContent.matches(PATTERN_STRINGS)
-                if !matches.isEmpty {
+                if (!matches.isEmpty) {
                     for match in matches {
                         let key = (originalContent as NSString).substringWithRange(match.rangeAtIndex(1)) as String
                         let value = (originalContent as NSString).substringWithRange(match.rangeAtIndex(2)) as String
@@ -73,12 +73,14 @@ class RContentGenerator {
             if let ls = PluginHelper.runShellCommand("ls \(imageDirPath.stringEscapeSpaces()) | grep imageset") {
                 let imagePaths = ls.componentsSeparatedByString("\n")
                 
-                for imagePath in imagePaths {
-                    let key = imagePath.stringByReplacingOccurrencesOfString(".imageset", withString: "")
-                    generatedContent += "        case \(key)\n"
+                if (!imagePaths.isEmpty) {
+                    for imagePath in imagePaths {
+                        let key = imagePath.stringByReplacingOccurrencesOfString(".imageset", withString: "")
+                        generatedContent += "        case \(key)\n"
+                    }
+                    // replace members of enum string
+                    replaceEnumMembers("image", members: generatedContent)
                 }
-                // replace members of enum string
-                replaceEnumMembers("image", members: generatedContent)
             }
         }
     }
@@ -88,7 +90,7 @@ class RContentGenerator {
         // read the Localizable.strings file
         if let originalContent = String.readFile(baseStringFilePath) {
             let matches = originalContent.matches(PATTERN_STRINGS)
-            if !matches.isEmpty {
+            if (!matches.isEmpty) {
                 // generate enum members
                 var generatedContent = ""
                 for match in matches {

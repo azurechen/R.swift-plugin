@@ -95,7 +95,7 @@ class PluginHelper {
         task.launch()
         
         let file = pipe.fileHandleForReading
-        if let result = NSString(data: file.readDataToEndOfFile(), encoding: NSUTF8StringEncoding)?.stringByTrimmingCharactersInSet(NSCharacterSet.newlineCharacterSet()) {
+        if let result = NSString(data: file.readDataToEndOfFile(), encoding: NSUTF8StringEncoding)?.stringByTrimmingCharactersInSet(NSCharacterSet.newlineCharacterSet()) where result != "" {
             return result as String
         }
         return nil
