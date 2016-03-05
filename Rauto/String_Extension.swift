@@ -51,4 +51,8 @@ extension String {
             return []
         }
     }
+    
+    func stringEscapeSpaces() -> String {
+        return self.stringByReplacingOccurrencesOfString(" ", withString: "\\ ")
+    }
 }

@@ -70,7 +70,7 @@ class RContentGenerator {
         var generatedContent = ""
         for imageDirPath in imageDirPaths {
             // read images in the Images.xcassets dir
-            if let ls = PluginHelper.runShellCommand("ls \(imageDirPath) | grep imageset") {
+            if let ls = PluginHelper.runShellCommand("ls \(imageDirPath.stringEscapeSpaces()) | grep imageset") {
                 let imagePaths = ls.componentsSeparatedByString("\n")
                 
                 for imagePath in imagePaths {

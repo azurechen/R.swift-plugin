@@ -218,12 +218,12 @@ class Rauto: NSObject, NSMenuDelegate {
         generator.generate()?.writeToFile(rPath)
         
         // lock R.swift
-        PluginHelper.runShellCommand("chmod 444 \(rPath)")
+        PluginHelper.runShellCommand("chmod 444 \(rPath.stringEscapeSpaces())")
     }
     
     private static func removeResourceFile(inProject project: (path: String, name: String)) {
         // remove R files
-        PluginHelper.runShellCommand("find \(project.path)/\(project.name) -name \(PluginHelper.TARGET_NAME_PATTERN_R) -type f -delete")
+        PluginHelper.runShellCommand("find \(project.path.stringEscapeSpaces())/\(project.name.stringEscapeSpaces()) -name \(PluginHelper.TARGET_NAME_PATTERN_R) -type f -delete")
     }
     
     private static func registerResourceFileIfNeeded(inProject project: (path: String, name: String)) {
