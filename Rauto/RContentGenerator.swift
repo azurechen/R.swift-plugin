@@ -38,7 +38,7 @@ class RContentGenerator {
     private func initFromTemplate() {
         let url = NSBundle(forClass: self.dynamicType).URLForResource("R_template", withExtension: "txt")
         content = try? String(contentsOfURL: url!, encoding: NSUTF8StringEncoding)
-        content? += "\n\n//  \(NSDate())" // for debug
+//        content? += "\n\n//  \(NSDate())" // for debug
     }
     
     private func generateColors() {
