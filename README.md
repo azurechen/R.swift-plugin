@@ -128,10 +128,10 @@ or
 
 After restarting Xcode, open any project and 
 
-1. The first time use
-   * Click `Product` -> `Rauto` -> `Enable Auto Sync`
+1. The first use
+   * Click `Edit` -> `Rauto` -> `Enable Auto Sync`
 2. If you want to manually sync
-   * Click `Product` -> `Rauto` -> `Sync`
+   * Click `Edit` -> `Rauto` -> `Sync`
 3. If you don't use Rauto in this project anymore
-   * Click `Product` -> `Rauto` -> `Clean` 
+   * Click `Edit` -> `Rauto` -> `Clean` 
 

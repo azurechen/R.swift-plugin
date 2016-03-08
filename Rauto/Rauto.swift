@@ -58,7 +58,7 @@ class Rauto: NSObject, NSMenuDelegate {
     func createMenu() {
         removeObserver()
 
-        let item = NSApp.mainMenu!.itemWithTitle("Product")
+        let item = NSApp.mainMenu!.itemWithTitle("Edit")
         if (item != nil) {
             item!.submenu!.addItem(NSMenuItem.separatorItem())
             
