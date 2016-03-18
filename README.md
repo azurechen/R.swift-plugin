@@ -1,4 +1,4 @@
-Rauto Plugin for Xcode
+R.swift Plugin for Xcode
 ======================
 
 This Xcode Plugin can generate a resource file like the `R.java` of `Android` automatically in `Swift`.
@@ -98,7 +98,7 @@ view.backgroundColor = color(.popcorn_yellow)
 
 ####Java-like Syntax
 
-`Rauto` supports the `Java-like syntax` if you used to code `Java`. But still suggest using a `Swift syntax`.
+`R.swift` supports the `Java-like syntax` if you used to code `Java`. But still suggest using a `Swift syntax`.
 
 ```swift
 getString(R.string.hello_world)
@@ -114,7 +114,7 @@ getColor(.popcorn_yellow)
 How to Install
 --------------
 
-Install it via <a href="http://alcatraz.io/">Alcatraz</a> and search `Rauto`
+Install it via <a href="http://alcatraz.io/">Alcatraz</a> and search `R.swift`
 
 or
 
@@ -123,15 +123,15 @@ or
 
 or
 
-1. Download and unzip a <a href="https://github.com/azurechen/Rauto/releases">release</a> to `~/Library/Application Support/Developer/Shared/Xcode/Plug-ins`.
+1. Download and unzip a <a href="https://github.com/azurechen/R.swift-plugin/releases">release</a> to `~/Library/Application Support/Developer/Shared/Xcode/Plug-ins`.
 2. `Restart` Xcode.
 
 After restarting Xcode, open any project and 
 
 1. The first use
-   * Click `Edit` -> `Rauto` -> `Enable Auto Sync`
+   * Click `Edit` -> `R.swift` -> `Enable Auto Sync`
 2. If you want to manually sync
-   * Click `Edit` -> `Rauto` -> `Sync`
-3. If you don't use Rauto in this project anymore
-   * Click `Edit` -> `Rauto` -> `Clean` 
+   * Click `Edit` -> `R.swift` -> `Sync`
+3. If you don't use `R.swift` in this project anymore
+   * Click `Edit` -> `R.swift` -> `Clean` 
 
