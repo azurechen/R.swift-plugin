@@ -21,7 +21,7 @@ extension NSObject {
     func swizzleClass(aClass: AnyClass, replace originalSelector: Selector, with swizzledSelector: Selector) {        
         let originalMethod = class_getInstanceMethod(aClass, originalSelector)
         let swizzledMethod = class_getInstanceMethod(aClass, swizzledSelector)
-        print("swizzle \(aClass) \(originalMethod), \(swizzledMethod)")
+//        print("swizzle \(aClass) \(originalMethod), \(swizzledMethod)")
         
         method_exchangeImplementations(originalMethod, swizzledMethod)
     }
