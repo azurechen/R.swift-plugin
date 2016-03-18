@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "53282FA91C67C5F100081171"
-               BuildableName = "Rauto.xcplugin"
-               BlueprintName = "Rauto"
-               ReferencedContainer = "container:Rauto.xcodeproj">
+               BuildableName = "R.swift-plugin.xcplugin"
+               BlueprintName = "R.swift-plugin"
+               ReferencedContainer = "container:R.swift-plugin.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "53282FA91C67C5F100081171"
-            BuildableName = "Rauto.xcplugin"
-            BlueprintName = "Rauto"
-            ReferencedContainer = "container:Rauto.xcodeproj">
+            BuildableName = "R.swift-plugin.xcplugin"
+            BlueprintName = "R.swift-plugin"
+            ReferencedContainer = "container:R.swift-plugin.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,15 +55,16 @@
       viewDebuggingEnabled = "No">
       <PathRunnable
          runnableDebuggingMode = "0"
+         BundleIdentifier = "com.apple.dt.Xcode"
          FilePath = "/Applications/Xcode.app">
       </PathRunnable>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "53282FA91C67C5F100081171"
-            BuildableName = "Rauto.xcplugin"
-            BlueprintName = "Rauto"
-            ReferencedContainer = "container:Rauto.xcodeproj">
+            BuildableName = "R.swift-plugin.xcplugin"
+            BlueprintName = "R.swift-plugin"
+            ReferencedContainer = "container:R.swift-plugin.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -79,9 +80,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "53282FA91C67C5F100081171"
-            BuildableName = "Rauto.xcplugin"
-            BlueprintName = "Rauto"
-            ReferencedContainer = "container:Rauto.xcodeproj">
+            BuildableName = "R.swift-plugin.xcplugin"
+            BlueprintName = "R.swift-plugin"
+            ReferencedContainer = "container:R.swift-plugin.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

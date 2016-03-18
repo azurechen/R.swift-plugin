@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		53282FAF1C67C5F100081171 /* Rauto.xcscheme in Resources */ = {isa = PBXBuildFile; fileRef = 53282FAE1C67C5F100081171 /* Rauto.xcscheme */; };
+		53282FAF1C67C5F100081171 /* R.swift-plugin.xcscheme in Resources */ = {isa = PBXBuildFile; fileRef = 53282FAE1C67C5F100081171 /* R.swift-plugin.xcscheme */; };
 		53282FB11C67C5F100081171 /* MainPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53282FB01C67C5F100081171 /* MainPlugin.swift */; };
 		53282FB31C67C5F100081171 /* NSObject_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53282FB21C67C5F100081171 /* NSObject_Extension.swift */; };
 		535393C71C6B8770003585F1 /* PluginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535393C61C6B8770003585F1 /* PluginHelper.swift */; };
@@ -18,8 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		53282FAA1C67C5F100081171 /* Rauto.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Rauto.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
-		53282FAE1C67C5F100081171 /* Rauto.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Rauto.xcscheme; path = Rauto.xcodeproj/xcshareddata/xcschemes/Rauto.xcscheme; sourceTree = SOURCE_ROOT; };
+		53282FAA1C67C5F100081171 /* R.swift-plugin.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "R.swift-plugin.xcplugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		53282FAE1C67C5F100081171 /* R.swift-plugin.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = file; name = "R.swift-plugin.xcscheme"; path = "R.swift-plugin.xcodeproj/xcshareddata/xcschemes/R.swift-plugin.xcscheme"; sourceTree = SOURCE_ROOT; };
 		53282FB01C67C5F100081171 /* MainPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPlugin.swift; sourceTree = "<group>"; };
 		53282FB21C67C5F100081171 /* NSObject_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSObject_Extension.swift; sourceTree = "<group>"; };
 		53282FB41C67C5F100081171 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -34,7 +34,7 @@
 		53282FA21C67C5F100081171 = {
 			isa = PBXGroup;
 			children = (
-				53282FAC1C67C5F100081171 /* Rauto */,
+				53282FAC1C67C5F100081171 /* R.swift-plugin */,
 				53282FAB1C67C5F100081171 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -42,12 +42,12 @@
 		53282FAB1C67C5F100081171 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				53282FAA1C67C5F100081171 /* Rauto.xcplugin */,
+				53282FAA1C67C5F100081171 /* R.swift-plugin.xcplugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		53282FAC1C67C5F100081171 /* Rauto */ = {
+		53282FAC1C67C5F100081171 /* R.swift-plugin */ = {
 			isa = PBXGroup;
 			children = (
 				53282FB21C67C5F100081171 /* NSObject_Extension.swift */,
@@ -60,13 +60,13 @@
 				535393CE1C6BE194003585F1 /* R_template.txt */,
 				53282FAD1C67C5F100081171 /* Supporting Files */,
 			);
-			path = Rauto;
+			path = "R.swift-plugin";
 			sourceTree = "<group>";
 		};
 		53282FAD1C67C5F100081171 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				53282FAE1C67C5F100081171 /* Rauto.xcscheme */,
+				53282FAE1C67C5F100081171 /* R.swift-plugin.xcscheme */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -74,9 +74,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		53282FA91C67C5F100081171 /* Rauto */ = {
+		53282FA91C67C5F100081171 /* R.swift-plugin */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 53282FB71C67C5F100081171 /* Build configuration list for PBXNativeTarget "Rauto" */;
+			buildConfigurationList = 53282FB71C67C5F100081171 /* Build configuration list for PBXNativeTarget "R.swift-plugin" */;
 			buildPhases = (
 				53282FA71C67C5F100081171 /* Sources */,
 				53282FA81C67C5F100081171 /* Resources */,
@@ -85,9 +85,9 @@
 			);
 			dependencies = (
 			);
-			name = Rauto;
-			productName = Rauto;
-			productReference = 53282FAA1C67C5F100081171 /* Rauto.xcplugin */;
+			name = "R.swift-plugin";
+			productName = R.swift-plugin;
+			productReference = 53282FAA1C67C5F100081171 /* R.swift-plugin.xcplugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -105,7 +105,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 53282FA61C67C5F100081171 /* Build configuration list for PBXProject "Rauto" */;
+			buildConfigurationList = 53282FA61C67C5F100081171 /* Build configuration list for PBXProject "R.swift-plugin" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -117,7 +117,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				53282FA91C67C5F100081171 /* Rauto */,
+				53282FA91C67C5F100081171 /* R.swift-plugin */,
 			);
 		};
 /* End PBXProject section */
@@ -127,7 +127,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53282FAF1C67C5F100081171 /* Rauto.xcscheme in Resources */,
+				53282FAF1C67C5F100081171 /* R.swift-plugin.xcscheme in Resources */,
 				535393CF1C6BE194003585F1 /* R_template.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -231,12 +231,12 @@
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(HOME)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				INFOPLIST_FILE = Rauto/Info.plist;
+				INFOPLIST_FILE = R.swift-plugin/Info.plist;
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
 				LD_RUNPATH_SEARCH_PATHS = "$(DT_TOOLCHAIN_DIR)/usr/lib/swift/macosx";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = com.azurechen.Rauto;
-				PRODUCT_NAME = Rauto;
+				PRODUCT_BUNDLE_IDENTIFIER = com.azurechen.Rswift;
+				PRODUCT_NAME = "R.swift-plugin";
 				WRAPPER_EXTENSION = xcplugin;
 			};
 			name = Debug;
@@ -248,12 +248,12 @@
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(HOME)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				INFOPLIST_FILE = Rauto/Info.plist;
+				INFOPLIST_FILE = R.swift-plugin/Info.plist;
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
 				LD_RUNPATH_SEARCH_PATHS = "$(DT_TOOLCHAIN_DIR)/usr/lib/swift/macosx";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = com.azurechen.Rauto;
-				PRODUCT_NAME = Rauto;
+				PRODUCT_BUNDLE_IDENTIFIER = com.azurechen.Rswift;
+				PRODUCT_NAME = "R.swift-plugin";
 				WRAPPER_EXTENSION = xcplugin;
 			};
 			name = Release;
@@ -261,7 +261,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		53282FA61C67C5F100081171 /* Build configuration list for PBXProject "Rauto" */ = {
+		53282FA61C67C5F100081171 /* Build configuration list for PBXProject "R.swift-plugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				53282FB51C67C5F100081171 /* Debug */,
@@ -270,7 +270,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		53282FB71C67C5F100081171 /* Build configuration list for PBXNativeTarget "Rauto" */ = {
+		53282FB71C67C5F100081171 /* Build configuration list for PBXNativeTarget "R.swift-plugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				53282FB81C67C5F100081171 /* Debug */,

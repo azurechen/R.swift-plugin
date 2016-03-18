@@ -1,6 +1,6 @@
 //
 //  String_Extension.swift
-//  Rauto
+//  R.swift-plugin
 //
 //  Created by Azure Chen on 2/9/16.
 //  Copyright © 2016 AzureChen. All rights reserved.

@@ -177,7 +177,7 @@ class MainPlugin: NSObject, NSMenuDelegate {
     }
     
     static func sync() {
-        print("Rauto Sync")
+        print("R.swift-plugin Sync")
         if let project = PluginHelper.project() {
             // 1. register the R.swift file in project.pbxproj
             registerResourceFileIfNeeded(inProject: project)
@@ -189,7 +189,7 @@ class MainPlugin: NSObject, NSMenuDelegate {
     }
     
     static func clean() {
-        print("Rauto Clean")
+        print("R.swift-plugin Clean")
         if let project = PluginHelper.project() {
             // 1. remove the R.swift file
             removeResourceFile(inProject: project)
