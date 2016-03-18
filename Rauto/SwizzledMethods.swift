@@ -18,14 +18,14 @@ extension NSWindow {
             if let project = PluginHelper.project() {
                 let key = "\(project.path)/\(project.name)"
                 
-                if (Rauto.states[key] == nil) {
+                if (MainPlugin.states[key] == nil) {
                     let rPath = PluginHelper.resourceFilePath(inProject: project)
-                    Rauto.states[key] = NSFileManager.defaultManager().fileExistsAtPath(rPath)
+                    MainPlugin.states[key] = NSFileManager.defaultManager().fileExistsAtPath(rPath)
                 }
             }
             
             // sync
-            Rauto.autoSyncIfNeeded(document: nil)
+            MainPlugin.autoSyncIfNeeded(document: nil)
         }
     }
 }
@@ -36,7 +36,7 @@ extension NSTabView {
         self.hook_selectTabViewItem(tabViewItem)
         
         // sync
-        Rauto.autoSyncIfNeeded(document: tabViewItem?.label)
+        MainPlugin.autoSyncIfNeeded(document: tabViewItem?.label)
     }
 }
 
@@ -46,6 +46,6 @@ extension NSTabViewItem {
         self.hook_setLabel(label)
         
         // sync
-        Rauto.autoSyncIfNeeded(document: self.label)
+        MainPlugin.autoSyncIfNeeded(document: self.label)
     }
 }

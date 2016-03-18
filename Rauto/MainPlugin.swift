@@ -1,5 +1,5 @@
 //
-//  Rauto.swift
+//  MainPlugin.swift
 //
 //  Created by AzureChen on 2/8/16.
 //  Copyright © 2016 AzureChen. All rights reserved.
@@ -7,9 +7,9 @@
 
 import AppKit
 
-var sharedPlugin: Rauto?
+var sharedPlugin: MainPlugin?
 
-class Rauto: NSObject, NSMenuDelegate {
+class MainPlugin: NSObject, NSMenuDelegate {
     
     var bundle: NSBundle
     lazy var center = NSNotificationCenter.defaultCenter()
@@ -63,7 +63,7 @@ class Rauto: NSObject, NSMenuDelegate {
             item!.submenu!.addItem(NSMenuItem.separatorItem())
             
             // first level item
-            let pluginItem = NSMenuItem(title: "Rauto", action: nil, keyEquivalent: "")
+            let pluginItem = NSMenuItem(title: "R.swift", action: nil, keyEquivalent: "")
             item!.submenu!.addItem(pluginItem)
             
             pluginMenu.delegate = self
@@ -78,7 +78,7 @@ class Rauto: NSObject, NSMenuDelegate {
             // get state
             if let project = PluginHelper.project() {
                 let key = "\(project.path)/\(project.name)"
-                if let state = Rauto.states[key] {
+                if let state = MainPlugin.states[key] {
                     enabled = state
                 }
             }
@@ -113,30 +113,30 @@ class Rauto: NSObject, NSMenuDelegate {
         if let project = PluginHelper.project() {
             let key = "\(project.path)/\(project.name)"
             
-            if (Rauto.states[key] != nil) {
+            if (MainPlugin.states[key] != nil) {
                 if (sender.state == NSOnState) {
-                    Rauto.states[key] = false
+                    MainPlugin.states[key] = false
                 } else {
-                    Rauto.states[key] = true
-                    Rauto.sync()
+                    MainPlugin.states[key] = true
+                    MainPlugin.sync()
                 }
             }
         }
     }
     
     func syncAction() {
-        Rauto.sync()
+        MainPlugin.sync()
     }
     
     func cleanAction() {
-        Rauto.clean()
+        MainPlugin.clean()
         
         // Set auto sync disable to avoid sync again after cleaning R
         if let project = PluginHelper.project() {
             let key = "\(project.path)/\(project.name)"
             
-            if (Rauto.states[key] != nil) {
-                Rauto.states[key] = false
+            if (MainPlugin.states[key] != nil) {
+                MainPlugin.states[key] = false
             }
         }
     }
