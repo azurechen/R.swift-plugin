@@ -1,6 +1,6 @@
 //
 //  PluginHelper.swift
-//  R.swift-plugin
+//  R.swift
 //
 //  Created by Azure Chen on 2/8/16.
 //  Copyright © 2016 AzureChen. All rights reserved.

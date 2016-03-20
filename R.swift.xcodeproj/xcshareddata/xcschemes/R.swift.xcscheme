@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "53282FA91C67C5F100081171"
-               BuildableName = "R.swift-plugin.xcplugin"
-               BlueprintName = "R.swift-plugin"
-               ReferencedContainer = "container:R.swift-plugin.xcodeproj">
+               BuildableName = "R.swift.xcplugin"
+               BlueprintName = "R.swift"
+               ReferencedContainer = "container:R.swift.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "53282FA91C67C5F100081171"
-            BuildableName = "R.swift-plugin.xcplugin"
-            BlueprintName = "R.swift-plugin"
-            ReferencedContainer = "container:R.swift-plugin.xcodeproj">
+            BuildableName = "R.swift.xcplugin"
+            BlueprintName = "R.swift"
+            ReferencedContainer = "container:R.swift.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "53282FA91C67C5F100081171"
-            BuildableName = "R.swift-plugin.xcplugin"
-            BlueprintName = "R.swift-plugin"
-            ReferencedContainer = "container:R.swift-plugin.xcodeproj">
+            BuildableName = "R.swift.xcplugin"
+            BlueprintName = "R.swift"
+            ReferencedContainer = "container:R.swift.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -80,9 +80,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "53282FA91C67C5F100081171"
-            BuildableName = "R.swift-plugin.xcplugin"
-            BlueprintName = "R.swift-plugin"
-            ReferencedContainer = "container:R.swift-plugin.xcodeproj">
+            BuildableName = "R.swift.xcplugin"
+            BlueprintName = "R.swift"
+            ReferencedContainer = "container:R.swift.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

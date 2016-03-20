@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/AzureChen/Code/Xcode/Rauto/R.swift-plugin.xcodeproj">
+      location = "self:/Users/AzureChen/Code/Xcode/R.swift-plugin/R.swift.xcodeproj">
    </FileRef>
 </Workspace>
